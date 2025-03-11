@@ -1,0 +1,35 @@
+@model List<HospitalAppointmentSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Mes Rendez-vous";
+}
+
+<h2>Mes Rendez-vous</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Docteur</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.Doctor.Specialization</td>
+                <td>@appointment.AppointmentDate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@appointment.Status</td>
+                <td>
+                    @if (appointment.Status == "Pending")
+                    {
+                        <a asp-action="Cancel" asp-route-id="@appointment.AppointmentId" class="btn btn-danger">Annuler</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Create" class="btn btn-primary">Prendre un rendez-vous</a>

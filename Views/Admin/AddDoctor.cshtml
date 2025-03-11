@@ -1,0 +1,16 @@
+@model HospitalAppointmentSystem.Models.Doctor
+
+@{
+    ViewData["Title"] = "Ajouter un Docteur";
+}
+
+<h2>Ajouter un Docteur</h2>
+
+<form asp-action="AddDoctor">
+    <div class="form-group">
+        <label>Spécialisation</label>
+        <input asp-for="Specialization" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+</form>

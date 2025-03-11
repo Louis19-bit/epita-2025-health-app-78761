@@ -1,0 +1,22 @@
+@model HospitalAppointmentSystem.Models.Appointment
+
+@{
+    ViewData["Title"] = "Réserver un Rendez-vous";
+}
+
+<h2>Réserver un Rendez-vous</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label>Docteur</label>
+        <select asp-for="DoctorId" class="form-control" asp-items="@(new SelectList(ViewBag.Doctors, "DoctorId", "Specialization"))">
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label>Date & Heure</label>
+        <input asp-for="AppointmentDate" class="form-control" type="datetime-local" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Confirmer</button>
+</form>
