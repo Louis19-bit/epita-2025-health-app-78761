@@ -1,0 +1,95 @@
+@page
+@model BookAppointmentModel
+@{
+    ViewData["Title"] = "Book an Appointment";
+}
+
+<h2>Book an Appointment</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label>Select Doctor</label>
+        <select asp-for="Input.DoctorId" class="form-control" id="doctorDropdown">
+            <option value="">-- Select a Doctor --</option>
+            @foreach (var doctor in Model.Doctors)
+            {
+                <option value="@doctor.Id">@doctor.FullName (@doctor.Specialization)</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Select Date</label>
+        <input asp-for="Input.Date" type="date" class="form-control" id="dateInput" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Select Time</label>
+        <div id="timeSlotButtons">
+            <!-- Les créneaux seront affichés ici -->
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="Input.TimeSlot" id="selectedTimeSlot" />
+
+    <button type="submit" class="btn btn-primary" id="bookButton" disabled>Book Appointment</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-success">@Model.Message</div>
+}
+
+<script>
+    document.getElementById("doctorDropdown").addEventListener("change", loadSlots);
+    document.getElementById("dateInput").addEventListener("change", loadSlots);
+
+    function loadSlots() {
+        var doctorId = document.getElementById("doctorDropdown").value;
+        var date = document.getElementById("dateInput").value;
+        var slotContainer = document.getElementById("timeSlotButtons");
+        slotContainer.innerHTML = "<p>Loading available slots...</p>";
+
+        if (doctorId && date) {
+            var formattedDate = new Date(date).toISOString().split('T')[0];
+
+            fetch(`/api/appointments/available?doctorId=${doctorId}&date=${formattedDate}`)
+                .then(response => response.json())
+                .then(slots => {
+                    slotContainer.innerHTML = "";
+                    if (slots.length === 0) {
+                        slotContainer.innerHTML = "<p>No available slots for this day.</p>";
+                        return;
+                    }
+
+                    slots.forEach(slot => {
+                        var button = document.createElement("button");
+                        button.classList.add("btn", "m-1");
+                        button.innerText = new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                        if (slot.status === "Available") {
+                            button.classList.add("btn-success");
+                            button.onclick = function () {
+                                document.getElementById("selectedTimeSlot").value = slot.startTime;
+                                document.getElementById("bookButton").disabled = false;
+                            };
+                        } else if (slot.status === "Pending") {
+                            button.classList.add("btn-secondary");
+                            button.disabled = true;
+                        } else if (slot.status === "Booked") {
+                            button.classList.add("btn-danger");
+                            button.disabled = true;
+                        }
+
+                        slotContainer.appendChild(button);
+                    });
+                })
+                .catch(error => {
+                    slotContainer.innerHTML = "<p>Error loading slots. Please try again.</p>";
+                    console.error("Error fetching time slots:", error);
+                });
+        } else {
+            slotContainer.innerHTML = "<p>Please select a doctor and date.</p>";
+        }
+    }
+</script>

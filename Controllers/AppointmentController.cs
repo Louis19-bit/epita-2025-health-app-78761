@@ -1,76 +1,47 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using HospitalAppointmentSystem.Models;
-using HospitalAppointmentSystem.Data;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
+using System.Threading.Tasks;
 
-namespace HospitalAppointmentSystem.Controllers
+[Route("api/appointments")]
+[ApiController]
+public class AppointmentController : ControllerBase
 {
-    [Authorize]
-    public class AppointmentController : Controller
+    private readonly AppointmentService _appointmentService;
+
+    public AppointmentController(AppointmentService appointmentService)
     {
-        private readonly AppDbContext _context;
+        _appointmentService = appointmentService;
+    }
 
-        public AppointmentController(AppDbContext context)
+    [HttpGet("available")]
+    public async Task<IActionResult> GetAvailableTimeSlots([FromQuery] string doctorId, [FromQuery] DateTime date)
+    {
+        if (string.IsNullOrEmpty(doctorId))
+            return BadRequest(new { error = "doctorId is required" });
+
+        var slots = await _appointmentService.GetAvailableTimeSlots(doctorId, date);
+        return Ok(slots);
+    }
+
+    [HttpPost("book")]
+    public async Task<IActionResult> BookAppointment([FromBody] AppointmentRequestDto model)
+    {
+        if (model == null)
+            return BadRequest("Invalid data");
+
+        var success = await _appointmentService.BookAppointment(new Appointment
         {
-            _context = context;
-        }
+            DoctorId = model.DoctorId,
+            StartTime = model.StartTime,
+            EndTime = model.EndTime,
+            Status = "Pending"
+        });
 
-        // Voir tous les rendez-vous du patient connecté
-        public IActionResult Index()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var appointments = _context.Appointments
-                .Include(a => a.Doctor)
-                .Where(a => a.PatientId == userId)
-                .ToList();
-            return View(appointments);
-        }
+        if (!success)
+            return BadRequest("Ce créneau est déjà réservé.");
 
-        // Formulaire de réservation de rendez-vous
-        [HttpGet]
-        public IActionResult Create()
-        {
-            ViewBag.Doctors = _context.Doctors.ToList();
-            return View();
-        }
-
-        // Traite la réservation de rendez-vous
-        [HttpPost]
-        public IActionResult Create(Appointment appointment)
-        {
-            if (ModelState.IsValid)
-            {
-                var conflict = _context.Appointments
-                    .Any(a => a.DoctorId == appointment.DoctorId && 
-                              a.AppointmentDate == appointment.AppointmentDate);
-
-                if (!conflict)
-                {
-                    appointment.PatientId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    _context.Add(appointment);
-                    _context.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-
-                ModelState.AddModelError("", "Ce créneau est déjà réservé !");
-            }
-            ViewBag.Doctors = _context.Doctors.ToList();
-            return View(appointment);
-        }
-
-        // Annuler un rendez-vous
-        public IActionResult Cancel(int id)
-        {
-            var appointment = _context.Appointments.Find(id);
-            if (appointment != null && appointment.PatientId == User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                _context.Appointments.Remove(appointment);
-                _context.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
+        return Ok("Rendez-vous réservé avec succès !");
     }
 }

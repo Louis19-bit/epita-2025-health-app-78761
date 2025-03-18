@@ -17,65 +17,73 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HospitalAppointmentSystem
 build_property.RootNamespace = HospitalAppointmentSystem
-build_property.ProjectDir = /Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/
+build_property.ProjectDir = /Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem
+build_property.MSBuildProjectDirectory = /Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Admin/AddDoctor.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vQWRkRG9jdG9yLmNzaHRtbA==
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Admin/Doctors.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRG9jdG9ycy5jc2h0bWw=
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Account/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWNjb3VudC9Mb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Appointment/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXBwb2ludG1lbnQvQ3JlYXRlLmNzaHRtbA==
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Appointment/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXBwb2ludG1lbnQvSW5kZXguY3NodG1s
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Admin/CreateUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vQ3JlYXRlVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Doctor/Appointments.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRG9jdG9yL0FwcG9pbnRtZW50cy5jc2h0bWw=
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Admin/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vRWRpdFVzZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Admin/ManageUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vTWFuYWdlVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Appointments/BookAppointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnRzL0Jvb2tBcHBvaW50bWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Appointments/_TimeSlotOptions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnRzL19UaW1lU2xvdE9wdGlvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Shared/_LoginPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/louis-alexandre/Desktop/Cours_Dorset/Introduction programming principles/Project/HospitalAppointmentSystem/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-2sorcba6d5
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-aa5l0ny76r

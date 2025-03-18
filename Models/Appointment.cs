@@ -1,22 +1,14 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace HospitalAppointmentSystem.Models
+public class Appointment
 {
-    public class Appointment
-    {
-        public int AppointmentId { get; set; }
+    public int Id { get; set; }
 
-        [Required]
-        public string PatientId { get; set; } = string.Empty;
+    public string PatientId { get; set; } // Clé étrangère vers ApplicationUser
+    public ApplicationUser Patient { get; set; }
 
-        [Required]
-        public int DoctorId { get; set; }
-        public Doctor Doctor { get; set; } = new Doctor();
+    public string DoctorId { get; set; } // Clé étrangère vers le médecin
+    public ApplicationUser Doctor { get; set; }
 
-        [Required]
-        public DateTime AppointmentDate { get; set; }
-
-        public string Status { get; set; } = "Pending";
-    }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+    public string Status { get; set; } // Pending, Approved, Rejected, Completed
 }
