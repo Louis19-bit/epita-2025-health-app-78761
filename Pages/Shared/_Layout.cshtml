@@ -32,10 +32,10 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Admin/Dashboard">Admin Panel</a>
+                                <a class="nav-link text-dark" asp-page="/Admin/ManageUsers">Manage Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Admin/ManageUsers">Manage Users</a>
+                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Manage Appointments</a>
                             </li>
                         }
 
@@ -44,15 +44,18 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/Doctor/Appointments">My Appointments</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Manage Appointments</a>
+                            </li>
                         }
 
-                        @if (User.IsInRole("Patient"))
+                        @if (User.IsInRole("User"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Appointments/Book">Book Appointment</a>
+                                <a class="btn btn-primary mx-2" asp-page="/Appointments/BookAppointment">📅 Book Appointment</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Appointments/MyAppointments">My Appointments</a>
+                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">My Appointments</a>
                             </li>
                         }
                     }

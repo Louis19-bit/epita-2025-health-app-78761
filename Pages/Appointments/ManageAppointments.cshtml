@@ -1,0 +1,86 @@
+@page
+@model ManageAppointmentsModel
+@{
+    ViewData["Title"] = "Manage Appointments";
+}
+
+<h2>Manage Appointments</h2>
+
+@if (!Model.UpcomingAppointments.Any() && !Model.PastAppointments.Any())
+{
+    <p>No appointments found.</p>
+}
+
+@if (Model.UpcomingAppointments.Any())
+{
+    <h3>Upcoming Appointments</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.UpcomingAppointments)
+            {
+                <tr>
+                    <td>@appointment.PatientName</td>
+                    <td>@appointment.DoctorName</td>
+                    <td>@appointment.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@appointment.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@appointment.Status</td>
+                    <td>
+                        @if (Model.IsDoctor)
+                        {
+                            <form method="post" asp-page-handler="Accept" asp-route-id="@appointment.Id" class="d-inline">
+                                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                            </form>
+                        }
+
+                        @if (appointment.Status == "Pending")
+                        {
+                            <a asp-page="/Appointments/EditAppointment" asp-route-id="@appointment.Id" class="btn btn-warning btn-sm">Edit</a>
+                        }
+
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@appointment.Id" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.PastAppointments.Any())
+{
+    <h3>Past Appointments</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.PastAppointments)
+            {
+                <tr>
+                    <td>@appointment.PatientName</td>
+                    <td>@appointment.DoctorName</td>
+                    <td>@appointment.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@appointment.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@appointment.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

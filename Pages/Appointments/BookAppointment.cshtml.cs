@@ -63,11 +63,23 @@ public class BookAppointmentModel : PageModel
 
     public async Task<IActionResult> OnGetLoadAvailableSlotsAsync(string doctorId, DateTime date)
     {
+        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+        {
+            return new JsonResult(new List<TimeSlot>());
+        }
+
         var startOfDay = date.Date.AddHours(9);
+        var lunchBreakStart = date.Date.AddHours(12);
+        var lunchBreakEnd = date.Date.AddHours(13);
         var endOfDay = date.Date.AddHours(17);
         var allSlots = new List<TimeSlot>();
 
-        for (var time = startOfDay; time < endOfDay; time = time.AddMinutes(30))
+        for (var time = startOfDay; time < lunchBreakStart; time = time.AddMinutes(30))
+        {
+            allSlots.Add(new TimeSlot { StartTime = time, EndTime = time.AddMinutes(30), Status = "Available" });
+        }
+
+        for (var time = lunchBreakEnd; time < endOfDay; time = time.AddMinutes(30))
         {
             allSlots.Add(new TimeSlot { StartTime = time, EndTime = time.AddMinutes(30), Status = "Available" });
         }

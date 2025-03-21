@@ -26,7 +26,7 @@
     <div class="mb-3">
         <label>Select Time</label>
         <div id="timeSlotButtons">
-            <!-- Les créneaux seront affichés ici -->
+            <!-- Time slots will be displayed here -->
         </div>
     </div>
 
@@ -41,6 +41,13 @@
 }
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dateInput = document.getElementById("dateInput");
+        var today = new Date().toISOString().split('T')[0];
+        dateInput.value = today; // Set default to today
+        dateInput.setAttribute("min", today); // Prevent selecting past dates
+    });
+
     document.getElementById("doctorDropdown").addEventListener("change", loadSlots);
     document.getElementById("dateInput").addEventListener("change", loadSlots);
 
