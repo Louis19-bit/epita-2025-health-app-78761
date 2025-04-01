@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 [Route("api/appointments")]
@@ -30,6 +28,11 @@ public class AppointmentController : ControllerBase
     {
         if (model == null)
             return BadRequest("Invalid data");
+
+        // 🔒 Vérifie si le médecin est en jour off
+        var isDoctorOff = await _appointmentService.IsDoctorOff(model.DoctorId, model.StartTime, model.EndTime);
+        if (isDoctorOff)
+            return BadRequest("Le médecin est en congé à cette date.");
 
         var success = await _appointmentService.BookAppointment(new Appointment
         {

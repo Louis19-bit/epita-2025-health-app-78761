@@ -4,22 +4,179 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(120deg, #e6f0fa, #ffffff);
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
 
-<form method="post">
-    <div>
-        <label>Email:</label>
-        <input asp-for="Input.Email" />
-        <span asp-validation-for="Input.Email"></span>
-    </div>
+    /* Effet de lumière flottante */
+    body::before {
+        content: '';
+        position: absolute;
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle, rgba(27,110,194,0.2) 0%, transparent 70%);
+        top: -200px;
+        left: -200px;
+        animation: floatGlow 12s ease-in-out infinite;
+        z-index: 0;
+    }
 
-    <div>
-        <label>Password:</label>
-        <input asp-for="Input.Password" type="password" />
-        <span asp-validation-for="Input.Password"></span>
-    </div>
+    @@keyframes floatGlow {
+        0% { transform: translate(0, 0); }
+        50% { transform: translate(100px, 60px); }
+        100% { transform: translate(0, 0); }
+    }
 
-    <button type="submit">Login</button>
+    .login-container {
+        position: relative;
+        z-index: 1;
+        max-width: 400px;
+        margin: 40px auto;
+        padding: 28px 24px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 16px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+    }
 
-    <p>Don't have an account? <a asp-page="/Account/Register">Register</a></p>
-</form>
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #1b6ec2;
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #1b6ec2;
+        box-shadow: 0 0 0 3px rgba(27, 110, 194, 0.2);
+        outline: none;
+    }
+
+    .form-group span {
+        color: red;
+        font-size: 0.9em;
+    }
+
+    .btn-submit {
+        width: 100%;
+        background-color: #1b6ec2;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+        background-color: #155a9d;
+        transform: translateY(-1px);
+    }
+
+    .register-link {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    .register-link a {
+        color: #1b6ec2;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+
+    .error-message {
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    footer {
+        display: none !important;
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="error-message">@Model.ErrorMessage</div>
+    }
+
+    <form method="post">
+        <div class="form-group">
+            <label>Email:</label>
+            <input asp-for="Input.Email" />
+            <span asp-validation-for="Input.Email"></span>
+        </div>
+
+        <div class="form-group" style="position: relative;">
+            <label>Password:</label>
+            <input asp-for="Input.Password" type="password" id="passwordInput" />
+            <button type="button" id="togglePassword" style="position: absolute; top: 40px; right: 12px; background: none; border: none; cursor: pointer;">
+                👁️
+            </button>
+            <span asp-validation-for="Input.Password"></span>
+        </div>
+
+        <button type="submit" class="btn-submit">Login</button>
+
+        <div class="register-link">
+            <p>Don't have an account? <a asp-page="/Account/Register">Register</a></p>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const passwordInput = document.getElementById("passwordInput");
+        const toggleButton = document.getElementById("togglePassword");
+
+        toggleButton.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggleButton.textContent = isPassword ? "🙈" : "👁️";
+        });
+    });
+</script>

@@ -16,6 +16,8 @@ public class LoginModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; } = new();
 
+    public string ErrorMessage { get; set; }
+
     public class InputModel
     {
         [Required]
@@ -24,18 +26,22 @@ public class LoginModel : PageModel
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid) return Page();
+        if (!ModelState.IsValid)
+            return Page();
 
-        var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, false);
+        var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
         if (result.Succeeded)
             return RedirectToPage("/Index");
 
-        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+        ErrorMessage = "Invalid email or password. Please try again.";
         return Page();
     }
 }

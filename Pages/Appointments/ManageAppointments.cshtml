@@ -6,6 +6,8 @@
 
 <h2>Manage Appointments</h2>
 
+<input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by patient, doctor, or date..." onkeyup="filterAppointments()" />
+
 @if (!Model.UpcomingAppointments.Any() && !Model.PastAppointments.Any())
 {
     <p>No appointments found.</p>
@@ -14,7 +16,7 @@
 @if (Model.UpcomingAppointments.Any())
 {
     <h3>Upcoming Appointments</h3>
-    <table class="table">
+    <table class="table" id="appointmentsTable">
         <thead>
             <tr>
                 <th>Patient</th>
@@ -31,11 +33,11 @@
                 <tr>
                     <td>@appointment.PatientName</td>
                     <td>@appointment.DoctorName</td>
-                    <td>@appointment.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
-                    <td>@appointment.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@appointment.StartTime.ToString("dd-MM-yyyy HH:mm")</td>
+                    <td>@appointment.EndTime.ToString("dd-MM-yyyy HH:mm")</td>
                     <td>@appointment.Status</td>
                     <td>
-                        @if (Model.IsDoctor)
+                        @if (Model.IsDoctor && appointment.Status == "Pending")
                         {
                             <form method="post" asp-page-handler="Accept" asp-route-id="@appointment.Id" class="d-inline">
                                 <button type="submit" class="btn btn-success btn-sm">Accept</button>
@@ -60,7 +62,7 @@
 @if (Model.PastAppointments.Any())
 {
     <h3>Past Appointments</h3>
-    <table class="table">
+    <table class="table" id="appointmentsTablePast">
         <thead>
             <tr>
                 <th>Patient</th>
@@ -68,6 +70,10 @@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Status</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Actions</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -76,11 +82,37 @@
                 <tr>
                     <td>@appointment.PatientName</td>
                     <td>@appointment.DoctorName</td>
-                    <td>@appointment.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
-                    <td>@appointment.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@appointment.StartTime.ToString("dd-MM-yyyy HH:mm")</td>
+                    <td>@appointment.EndTime.ToString("dd-MM-yyyy HH:mm")</td>
                     <td>@appointment.Status</td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@appointment.Id" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
     </table>
+}
+
+@section Scripts {
+    <script>
+        function filterAppointments() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const tables = [document.getElementById("appointmentsTable"), document.getElementById("appointmentsTablePast")];
+
+            tables.forEach(table => {
+                if (!table) return;
+                const rows = table.getElementsByTagName("tr");
+                for (let i = 1; i < rows.length; i++) {
+                    const rowText = rows[i].innerText.toLowerCase();
+                    rows[i].style.display = rowText.includes(input) ? "" : "none";
+                }
+            });
+        }
+    </script>
 }

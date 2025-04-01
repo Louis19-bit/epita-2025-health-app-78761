@@ -8,6 +8,11 @@
 
 <a asp-page="CreateUser" class="btn btn-success mb-3">+ Create New User</a>
 
+<!-- Barre de recherche -->
+<div class="mb-3">
+    <input type="text" id="userSearch" class="form-control" placeholder="Search by name, email, role, or specialization...">
+</div>
+
 <table class="table table-bordered">
     <thead class="thead-dark">
     <tr>
@@ -45,3 +50,22 @@
     }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("userSearch");
+            const rows = document.querySelectorAll("tbody tr");
+
+            searchInput.addEventListener("keyup", function () {
+                const query = this.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll("td");
+                    const matches = Array.from(cells).some(cell => cell.innerText.toLowerCase().includes(query));
+                    row.style.display = matches ? "" : "none";
+                });
+            });
+        });
+    </script>
+}

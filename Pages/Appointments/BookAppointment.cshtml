@@ -4,6 +4,16 @@
     ViewData["Title"] = "Book an Appointment";
 }
 
+<style>
+    .btn-off {
+        background-color: #343a40 !important; /* Bootstrap "dark" */
+        color: white !important;
+        border: 1px solid #212529;
+        opacity: 1 !important; /* ne pas griser le bouton même s’il est disabled */
+        cursor: not-allowed;
+    }
+</style>
+
 <h2>Book an Appointment</h2>
 
 <form method="post">
@@ -24,15 +34,20 @@
     </div>
 
     <div class="mb-3">
-        <label>Select Time</label>
-        <div id="timeSlotButtons">
-            <!-- Time slots will be displayed here -->
-        </div>
+        <strong>Legend:</strong>
+        <span class="badge bg-success">Available</span>
+        <span class="badge bg-secondary">Pending</span>
+        <span class="badge bg-danger">Booked</span>
+        <span class="badge bg-light text-dark border">Lunch Break</span>
+        <span class="badge bg-dark">Doctor Off</span>
+    </div>
+    <div id="timeSlotButtons">
+        <!-- Time slots will be displayed here -->
     </div>
 
     <input type="hidden" asp-for="Input.TimeSlot" id="selectedTimeSlot" />
 
-    <button type="submit" class="btn btn-primary" id="bookButton" disabled>Book Appointment</button>
+    <button type="submit" class="btn btn-primary" id="bookButton" disabled>Select time to Book Appointment</button>
 </form>
 
 @if (!string.IsNullOrEmpty(Model.Message))
@@ -41,24 +56,26 @@
 }
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var dateInput = document.getElementById("dateInput");
-        var today = new Date().toISOString().split('T')[0];
-        dateInput.value = today; // Set default to today
-        dateInput.setAttribute("min", today); // Prevent selecting past dates
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("dateInput");
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.value = today;
+        dateInput.setAttribute("min", today);
     });
 
     document.getElementById("doctorDropdown").addEventListener("change", loadSlots);
     document.getElementById("dateInput").addEventListener("change", loadSlots);
 
     function loadSlots() {
-        var doctorId = document.getElementById("doctorDropdown").value;
-        var date = document.getElementById("dateInput").value;
-        var slotContainer = document.getElementById("timeSlotButtons");
+        const doctorId = document.getElementById("doctorDropdown").value;
+        const date = document.getElementById("dateInput").value;
+        const slotContainer = document.getElementById("timeSlotButtons");
         slotContainer.innerHTML = "<p>Loading available slots...</p>";
 
         if (doctorId && date) {
-            var formattedDate = new Date(date).toISOString().split('T')[0];
+            const selectedDate = new Date(date);
+            const today = new Date();
+            const formattedDate = selectedDate.toISOString().split('T')[0];
 
             fetch(`/api/appointments/available?doctorId=${doctorId}&date=${formattedDate}`)
                 .then(response => response.json())
@@ -70,11 +87,30 @@
                     }
 
                     slots.forEach(slot => {
-                        var button = document.createElement("button");
-                        button.classList.add("btn", "m-1");
-                        button.innerText = new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const slotDate = new Date(slot.startTime);
+                        const hour = slotDate.getHours();
+                        const minutes = slotDate.getMinutes();
 
-                        if (slot.status === "Available") {
+                        const isToday = selectedDate.toDateString() === today.toDateString();
+                        const isLunch = hour === 12 && (minutes === 0 || minutes === 30);
+
+                        const button = document.createElement("button");
+                        button.classList.add("btn", "m-1");
+                        button.innerText = slotDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                        if (slot.status === "Unavailable") {
+                            button.classList.add("btn-off");
+                            button.disabled = true;
+                            button.title = "Unavailable - Doctor is off";
+                        } else if (isLunch) {
+                            button.classList.add("btn-light", "border");
+                            button.disabled = true;
+                            button.title = "Lunch Break";
+                        } else if (isToday && slotDate <= new Date()) {
+                            button.classList.add("btn-light", "border");
+                            button.disabled = true;
+                            button.title = "Past time";
+                        } else if (slot.status === "Available") {
                             button.classList.add("btn-success");
                             button.onclick = function () {
                                 document.getElementById("selectedTimeSlot").value = slot.startTime;
@@ -83,9 +119,11 @@
                         } else if (slot.status === "Pending") {
                             button.classList.add("btn-secondary");
                             button.disabled = true;
+                            button.title = "Pending Approval";
                         } else if (slot.status === "Booked") {
                             button.classList.add("btn-danger");
                             button.disabled = true;
+                            button.title = "Already Booked";
                         }
 
                         slotContainer.appendChild(button);

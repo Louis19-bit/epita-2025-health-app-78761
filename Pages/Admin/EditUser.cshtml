@@ -22,9 +22,12 @@
     <div class="mb-3">
         <label class="form-label">Role</label>
         <select asp-for="Input.Role" class="form-control" id="roleDropdown">
-            <option value="User">User</option>
-            <option value="Doctor">Doctor</option>
-            <option value="Admin">Admin</option>
+            @foreach (var role in Model.AllRoles)
+            {
+                <option value="@role" selected="@(role == Model.Input.Role)">
+                    @role
+                </option>
+            }
         </select>
     </div>
 
@@ -43,11 +46,13 @@
 </form>
 
 <script>
-    document.getElementById("roleDropdown").addEventListener("change", function () {
-        document.getElementById("specializationField").style.display = this.value === "Doctor" ? "block" : "none";
-    });
+    const roleDropdown = document.getElementById("roleDropdown");
+    const specField = document.getElementById("specializationField");
 
-    window.onload = function () {
-        document.getElementById("specializationField").style.display = document.getElementById("roleDropdown").value === "Doctor" ? "block" : "none";
-    };
+    function toggleSpecialization() {
+        specField.style.display = roleDropdown.value === "Doctor" ? "block" : "none";
+    }
+
+    roleDropdown.addEventListener("change", toggleSpecialization);
+    window.onload = toggleSpecialization;
 </script>

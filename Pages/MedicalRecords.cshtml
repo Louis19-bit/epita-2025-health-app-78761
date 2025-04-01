@@ -1,0 +1,106 @@
+@page
+@model MedicalRecordsModel
+@{
+    ViewData["Title"] = "Medical Records";
+    Layout = "_Layout";
+}
+
+<h2>Medical Records</h2>
+
+@if (User.IsInRole("Doctor"))
+{
+    <form method="get" class="mb-3">
+        <label>Select Patient:</label>
+        <select name="patientId" onchange="this.form.submit()" class="form-control w-auto d-inline">
+            <option value="">-- Select --</option>
+            @foreach (var patient in Model.AllPatients)
+            {
+                <option value="@patient.Id" selected="@(Model.SelectedPatient?.Id == patient.Id)">
+                    @patient.FullName (@patient.Email)
+                </option>
+            }
+        </select>
+    </form>
+}
+
+@if (Model.SelectedPatient != null)
+{
+    <h4>🧑 Patient: @Model.SelectedPatient.FullName</h4>
+
+    <form method="post">
+        <input type="hidden" name="PatientId" value="@Model.SelectedPatient.Id" />
+        <div class="mb-2">
+            <label>Title</label>
+            <input name="Title" class="form-control" required />
+        </div>
+        <div class="mb-2">
+            <label>Description</label>
+            <textarea name="Description" class="form-control"></textarea>
+        </div>
+        <div class="mb-2">
+            <label>Date</label>
+            <input name="Date" type="date" class="form-control" required />
+        </div>
+        <button class="btn btn-success">Add Record</button>
+    </form>
+
+    <hr />
+
+    <h4>💬 Medical Assistant Chat</h4>
+    <form method="post" asp-page-handler="Chat" class="d-flex gap-2 mb-2">
+        <input type="hidden" name="patientId" value="@Model.SelectedPatient.Id" />
+        <input name="ChatInput" asp-for="ChatInput" class="form-control" placeholder="Ask about this patient..." required />
+        <button class="btn btn-primary">Ask</button>
+    </form>
+
+    <form method="post" asp-page-handler="ResetChat">
+        <input type="hidden" name="patientId" value="@Model.SelectedPatient.Id" />
+        <button class="btn btn-sm btn-outline-secondary">Reset Chat</button>
+    </form>
+
+    @if (Model.AIDisabled)
+    {
+        <div class="alert alert-warning">⚠️ AI chat unavailable (Ollama not running)</div>
+    }
+
+    @if (Model.ChatHistory.Any())
+    {
+        <div class="chat-box mt-3 p-3 border rounded bg-light">
+            @foreach (var msg in Model.ChatHistory)
+            {
+                <div class="mb-2">@Html.Raw(msg)</div>
+            }
+        </div>
+    }
+}
+
+@if (Model.Records.Any())
+{
+    <h4 class="mt-4">📋 Records</h4>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Date</th><th>Title</th><th>Description</th>
+            @if (User.IsInRole("Doctor")) { <th>Actions</th> }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var rec in Model.Records)
+        {
+            <tr>
+                <td>@rec.Date.ToString("dd MMM yyyy")</td>
+                <td>@rec.Title</td>
+                <td>@rec.Description</td>
+                @if (User.IsInRole("Doctor"))
+                {
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@rec.Id" class="d-inline">
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this record?')">🗑 Delete</button>
+                        </form>
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}

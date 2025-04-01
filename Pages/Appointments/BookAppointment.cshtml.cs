@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize(Roles = "Patient,Admin")]
 public class BookAppointmentModel : PageModel
 {
     private readonly AppDbContext _context;
@@ -20,8 +22,8 @@ public class BookAppointmentModel : PageModel
     }
 
     public List<DoctorViewModel> Doctors { get; set; } = new();
-    public List<TimeSlot> AvailableTimeSlots { get; set; } = new(); // Liste des créneaux disponibles
-    public string? Message { get; set; } // ✅ Correction : Définition de Message
+    public List<TimeSlot> AvailableTimeSlots { get; set; } = new();
+    public string? Message { get; set; }
 
     [BindProperty]
     public InputModel Input { get; set; } = new();
@@ -35,7 +37,7 @@ public class BookAppointmentModel : PageModel
         public DateTime Date { get; set; }
 
         [Required]
-        public DateTime TimeSlot { get; set; } // ✅ Correction : Ajout de TimeSlot
+        public DateTime TimeSlot { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync()
@@ -69,20 +71,25 @@ public class BookAppointmentModel : PageModel
         }
 
         var startOfDay = date.Date.AddHours(9);
-        var lunchBreakStart = date.Date.AddHours(12);
-        var lunchBreakEnd = date.Date.AddHours(13);
         var endOfDay = date.Date.AddHours(17);
         var allSlots = new List<TimeSlot>();
 
-        for (var time = startOfDay; time < lunchBreakStart; time = time.AddMinutes(30))
+        for (var time = startOfDay; time < endOfDay; time = time.AddMinutes(30))
         {
-            allSlots.Add(new TimeSlot { StartTime = time, EndTime = time.AddMinutes(30), Status = "Available" });
+            if (time >= date.Date.AddHours(12) && time < date.Date.AddHours(13))
+                continue;
+
+            allSlots.Add(new TimeSlot
+            {
+                StartTime = time,
+                EndTime = time.AddMinutes(30),
+                Status = "Available"
+            });
         }
 
-        for (var time = lunchBreakEnd; time < endOfDay; time = time.AddMinutes(30))
-        {
-            allSlots.Add(new TimeSlot { StartTime = time, EndTime = time.AddMinutes(30), Status = "Available" });
-        }
+        var doctorDaysOff = await _context.DoctorDaysOff
+            .Where(d => d.DoctorId == doctorId && d.End > date.Date && d.Start < date.Date.AddDays(1))
+            .ToListAsync();
 
         var existingAppointments = await _context.Appointments
             .Where(a => a.DoctorId == doctorId && a.StartTime.Date == date.Date)
@@ -91,10 +98,18 @@ public class BookAppointmentModel : PageModel
 
         var slotsWithStatus = allSlots.Select(slot =>
         {
-            var existing = existingAppointments.FirstOrDefault(a => a.StartTime == slot.StartTime);
-            if (existing != null)
+            var isDoctorOff = doctorDaysOff.Any(d => slot.StartTime < d.End && slot.EndTime > d.Start);
+            if (isDoctorOff)
             {
-                slot.Status = existing.Status == "Approved" ? "Booked" : "Pending";
+                slot.Status = "Unavailable";
+            }
+            else
+            {
+                var existing = existingAppointments.FirstOrDefault(a => a.StartTime == slot.StartTime);
+                if (existing != null)
+                {
+                    slot.Status = existing.Status == "Approved" ? "Booked" : "Pending";
+                }
             }
             return slot;
         }).ToList();
@@ -110,16 +125,21 @@ public class BookAppointmentModel : PageModel
         var startTime = Input.TimeSlot;
         var endTime = startTime.AddMinutes(30);
 
+        var doctorDaysOff = await _context.DoctorDaysOff
+            .Where(d => d.DoctorId == Input.DoctorId)
+            .ToListAsync();
+
         bool isAvailable = !_context.Appointments
-            .Any(a => a.DoctorId == Input.DoctorId &&
-                      a.Status == "Approved" &&
-                      ((startTime >= a.StartTime && startTime < a.EndTime) ||
-                       (endTime > a.StartTime && endTime <= a.EndTime) ||
-                       (startTime <= a.StartTime && endTime >= a.EndTime)));
+                               .Any(a => a.DoctorId == Input.DoctorId &&
+                                         a.Status == "Approved" &&
+                                         ((startTime >= a.StartTime && startTime < a.EndTime) ||
+                                          (endTime > a.StartTime && endTime <= a.EndTime) ||
+                                          (startTime <= a.StartTime && endTime >= a.EndTime))) &&
+                           !doctorDaysOff.Any(d => startTime < d.End && endTime > d.Start);
 
         if (!isAvailable)
         {
-            ModelState.AddModelError("", "This time slot is already booked.");
+            ModelState.AddModelError("", "This time slot is already booked or the doctor is off.");
             return Page();
         }
 
@@ -140,7 +160,6 @@ public class BookAppointmentModel : PageModel
     }
 }
 
-// ✅ Correction : Ajout de la classe `TimeSlot`
 public class TimeSlot
 {
     public DateTime StartTime { get; set; }
@@ -148,7 +167,6 @@ public class TimeSlot
     public string Status { get; set; } = "Available";
 }
 
-// ✅ Correction : Ajout de `DoctorViewModel`
 public class DoctorViewModel
 {
     public string Id { get; set; } = string.Empty;

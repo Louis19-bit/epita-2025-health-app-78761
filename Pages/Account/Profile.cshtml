@@ -1,0 +1,57 @@
+@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "_Layout";
+}
+<h2>My Profile</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Input.Id" />
+
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input asp-for="Input.FullName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Input.Email" class="form-control" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label>New Password</label>
+        <input asp-for="Input.NewPassword" type="password" class="form-control" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="Input.ReceiveEmailNotifications" class="form-check-input" />
+        <label class="form-check-label" for="Input.ReceiveEmailNotifications">
+            I want to receive email notifications
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<hr />
+
+@if (User.IsInRole("Patient"))
+{
+    <h4>📋 Medical Summary</h4>
+    <ul>
+        @foreach (var record in Model.MedicalHistory)
+        {
+            <li>@record</li>
+        }
+    </ul>
+}
+
+<hr />
+
+<form method="post" asp-page-handler="Delete">
+    <button type="submit" class="btn btn-danger"
+            onclick="return confirm('Are you sure you want to delete your account and request data removal?');">
+        Delete My Account & Data
+    </button>
+</form>

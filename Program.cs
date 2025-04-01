@@ -5,9 +5,20 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpClient(); // for HttpClientFactory for external API calls
+// Ollama API
+builder.Services.AddSession(); // for session management and chat history
+
+
 // 🟢 Configure SQLite Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
 
 // 🟢 Configure Identity (Users, Roles)
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
@@ -53,6 +64,7 @@ using (var scope = app.Services.CreateScope())
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
+app.UseSession();
 app.UseAuthorization();
 
 app.UseSwagger();

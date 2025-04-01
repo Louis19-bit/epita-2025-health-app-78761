@@ -8,4 +8,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<DoctorDayOff> DoctorDaysOff { get; set; }
+    public DbSet<MedicalRecord> MedicalRecords { get; set; }
+
 }

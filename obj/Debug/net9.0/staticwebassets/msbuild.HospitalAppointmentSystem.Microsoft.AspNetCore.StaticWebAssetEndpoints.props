@@ -1,5 +1,17 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/css/privacy.4r0308zush.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\privacy.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4r0308zush"},{"Name":"integrity","Value":"sha256-cAm\u002BEQsia8udxu8gCBjJs8j8zcuLKs0rSd0nV\u002BOwymk="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/css/privacy.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"814"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022cAm\u002BEQsia8udxu8gCBjJs8j8zcuLKs0rSd0nV\u002BOwymk=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 12:36:30 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/css/privacy.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\privacy.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-cAm\u002BEQsia8udxu8gCBjJs8j8zcuLKs0rSd0nV\u002BOwymk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"814"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022cAm\u002BEQsia8udxu8gCBjJs8j8zcuLKs0rSd0nV\u002BOwymk=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 12:36:30 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/css/site.b9sayid5wm.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -35,6 +47,90 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"d6hgjzmvq6"},{"Name":"integrity","Value":"sha256-9TkucDp6vWtPd6R0uRTh4ZBZxoxBt0HJdMI\u002B\u002BLjX2pA="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/HospitalAppointmentSystem.bundle.scp.css"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1094"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00229TkucDp6vWtPd6R0uRTh4ZBZxoxBt0HJdMI\u002B\u002BLjX2pA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Mar 2025 09:30:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/care.rff9z3wv9l.svg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\care.svg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rff9z3wv9l"},{"Name":"integrity","Value":"sha256-Z2VAYjyA0KkU5tnXX3yxFb7/t34XTFJWQCsBMjmf990="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/images/care.svg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"9953"},{"Name":"Content-Type","Value":"image/svg\u002Bxml"},{"Name":"ETag","Value":"\u0022Z2VAYjyA0KkU5tnXX3yxFb7/t34XTFJWQCsBMjmf990=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:12:28 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/care.svg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\care.svg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Z2VAYjyA0KkU5tnXX3yxFb7/t34XTFJWQCsBMjmf990="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"9953"},{"Name":"Content-Type","Value":"image/svg\u002Bxml"},{"Name":"ETag","Value":"\u0022Z2VAYjyA0KkU5tnXX3yxFb7/t34XTFJWQCsBMjmf990=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:12:28 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/DALL·E 2025-03-25 11.12.48 - A realistic and attractive hospital website background image, very wide layout. The scene shows the exterior of a modern hospital building with clean .9ue48n3y86.webp">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\DALL·E 2025-03-25 11.12.48 - A realistic and attractive hospital website background image, very wide layout. The scene shows the exterior of a modern hospital building with clean .webp'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"9ue48n3y86"},{"Name":"integrity","Value":"sha256-IZi2dGYpoK00sDlGVWf2lB6w5AGZvja5t09Sgdl/njA="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/images/DALL\u00B7E 2025-03-25 11.12.48 - A realistic and attractive hospital website background image, very wide layout. The scene shows the exterior of a modern hospital building with clean .webp"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"536974"},{"Name":"Content-Type","Value":"image/webp"},{"Name":"ETag","Value":"\u0022IZi2dGYpoK00sDlGVWf2lB6w5AGZvja5t09Sgdl/njA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 11:12:48 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/DALL·E 2025-03-25 11.12.48 - A realistic and attractive hospital website background image, very wide layout. The scene shows the exterior of a modern hospital building with clean .webp">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\DALL·E 2025-03-25 11.12.48 - A realistic and attractive hospital website background image, very wide layout. The scene shows the exterior of a modern hospital building with clean .webp'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-IZi2dGYpoK00sDlGVWf2lB6w5AGZvja5t09Sgdl/njA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"536974"},{"Name":"Content-Type","Value":"image/webp"},{"Name":"ETag","Value":"\u0022IZi2dGYpoK00sDlGVWf2lB6w5AGZvja5t09Sgdl/njA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 11:12:48 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/doctors.h4y6iuthdh.svg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\doctors.svg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"h4y6iuthdh"},{"Name":"integrity","Value":"sha256-v3NWB/VMkjDVFDaKaVRpRsWbyo\u002BVhQfrz1yDQsQFwao="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/images/doctors.svg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"124128"},{"Name":"Content-Type","Value":"image/svg\u002Bxml"},{"Name":"ETag","Value":"\u0022v3NWB/VMkjDVFDaKaVRpRsWbyo\u002BVhQfrz1yDQsQFwao=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:12:24 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/doctors.svg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\doctors.svg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-v3NWB/VMkjDVFDaKaVRpRsWbyo\u002BVhQfrz1yDQsQFwao="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"124128"},{"Name":"Content-Type","Value":"image/svg\u002Bxml"},{"Name":"ETag","Value":"\u0022v3NWB/VMkjDVFDaKaVRpRsWbyo\u002BVhQfrz1yDQsQFwao=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:12:24 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/equipment.b5diinu7sl.svg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\equipment.svg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"b5diinu7sl"},{"Name":"integrity","Value":"sha256-D8EWjG1icHZTWfsCIseYBZdizvoycn8\u002B\u002BwW3HUw0XFk="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/images/equipment.svg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"161975"},{"Name":"Content-Type","Value":"image/svg\u002Bxml"},{"Name":"ETag","Value":"\u0022D8EWjG1icHZTWfsCIseYBZdizvoycn8\u002B\u002BwW3HUw0XFk=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:12:30 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/equipment.svg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\equipment.svg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-D8EWjG1icHZTWfsCIseYBZdizvoycn8\u002B\u002BwW3HUw0XFk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"161975"},{"Name":"Content-Type","Value":"image/svg\u002Bxml"},{"Name":"ETag","Value":"\u0022D8EWjG1icHZTWfsCIseYBZdizvoycn8\u002B\u002BwW3HUw0XFk=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:12:30 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/hospital-bg.0jdvtfpxkt.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\hospital-bg.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"0jdvtfpxkt"},{"Name":"integrity","Value":"sha256-PP9Drg6N8/I67fVLF2dULfvNIAv2AayMAl19MRPUkFw="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/images/hospital-bg.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2812892"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022PP9Drg6N8/I67fVLF2dULfvNIAv2AayMAl19MRPUkFw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 11:13:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/hospital-bg.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\hospital-bg.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-PP9Drg6N8/I67fVLF2dULfvNIAv2AayMAl19MRPUkFw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2812892"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022PP9Drg6N8/I67fVLF2dULfvNIAv2AayMAl19MRPUkFw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 11:13:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/hospital-bg2.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\hospital-bg2.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-vEbjhbKRq4NQHp/I3i3afoQCDC6hNotpzjd6I9MaQ3k="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"56851"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022vEbjhbKRq4NQHp/I3i3afoQCDC6hNotpzjd6I9MaQ3k=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:25:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/hospital-bg2.o5nidxjyb7.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\hospital-bg2.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"o5nidxjyb7"},{"Name":"integrity","Value":"sha256-vEbjhbKRq4NQHp/I3i3afoQCDC6hNotpzjd6I9MaQ3k="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/images/hospital-bg2.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"56851"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022vEbjhbKRq4NQHp/I3i3afoQCDC6hNotpzjd6I9MaQ3k=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 10:25:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/hospital-bg3.15jq1qf22l.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\hospital-bg3.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"15jq1qf22l"},{"Name":"integrity","Value":"sha256-ZZyFm/QcILQWLPxmsyP66S0SipagwLo67zl6Q5z9djU="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/images/hospital-bg3.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"405597"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ZZyFm/QcILQWLPxmsyP66S0SipagwLo67zl6Q5z9djU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 11:08:18 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/images/hospital-bg3.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\hospital-bg3.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ZZyFm/QcILQWLPxmsyP66S0SipagwLo67zl6Q5z9djU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"405597"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ZZyFm/QcILQWLPxmsyP66S0SipagwLo67zl6Q5z9djU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 11:08:18 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>

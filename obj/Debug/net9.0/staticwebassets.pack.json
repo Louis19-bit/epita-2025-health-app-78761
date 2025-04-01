@@ -5,12 +5,44 @@
       "PackagePath": "staticwebassets/HospitalAppointmentSystem.d6hgjzmvq6.bundle.scp.css"
     },
     {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/css/privacy.css",
+      "PackagePath": "staticwebassets/css/privacy.css"
+    },
+    {
       "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
       "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/DALL·E 2025-03-25 11.12.48 - A realistic and attractive hospital website background image, very wide layout. The scene shows the exterior of a modern hospital building with clean .webp",
+      "PackagePath": "staticwebassets/images/DALL·E 2025-03-25 11.12.48 - A realistic and attractive hospital website background image, very wide layout. The scene shows the exterior of a modern hospital building with clean .webp"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/care.svg",
+      "PackagePath": "staticwebassets/images/care.svg"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/doctors.svg",
+      "PackagePath": "staticwebassets/images/doctors.svg"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/equipment.svg",
+      "PackagePath": "staticwebassets/images/equipment.svg"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg.png",
+      "PackagePath": "staticwebassets/images/hospital-bg.png"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg2.jpg",
+      "PackagePath": "staticwebassets/images/hospital-bg2.jpg"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg3.png",
+      "PackagePath": "staticwebassets/images/hospital-bg3.png"
     },
     {
       "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/js/site.js",

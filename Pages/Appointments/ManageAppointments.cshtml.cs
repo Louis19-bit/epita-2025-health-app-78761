@@ -23,15 +23,17 @@ public class ManageAppointmentsModel : PageModel
     public List<AppointmentViewModel> UpcomingAppointments { get; set; } = new();
     public List<AppointmentViewModel> PastAppointments { get; set; } = new();
     public bool IsDoctor { get; set; }
+    public bool IsAdmin { get; set; }
 
     public class AppointmentViewModel
     {
         public int Id { get; set; }
-        public string PatientName { get; set; }
-        public string DoctorName { get; set; }
+        public string PatientName { get; set; } = string.Empty;
+        public string DoctorName { get; set; } = string.Empty;
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public bool IsValidatedByDoctor { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync()
@@ -39,49 +41,54 @@ public class ManageAppointmentsModel : PageModel
         var userId = _userManager.GetUserId(User);
         if (userId == null) return Unauthorized();
 
-        IsDoctor = await _userManager.IsInRoleAsync(await _userManager.FindByIdAsync(userId), "Doctor");
+        var user = await _userManager.FindByIdAsync(userId);
+        IsDoctor = await _userManager.IsInRoleAsync(user, "Doctor");
+        IsAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
         var now = DateTime.Now;
 
-        if (IsDoctor)
+        List<Appointment> appointments;
+
+        if (IsAdmin)
+        {
+            // 👑 Admin : Voir tous les rendez-vous
+            appointments = await _context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .ToListAsync();
+        }
+        else if (IsDoctor)
         {
             // 🩺 Docteur : Ses rendez-vous
-            var appointments = await _context.Appointments
+            appointments = await _context.Appointments
                 .Where(a => a.DoctorId == userId)
                 .Include(a => a.Patient)
-                .Select(a => new AppointmentViewModel
-                {
-                    Id = a.Id,
-                    PatientName = a.Patient.FullName,
-                    DoctorName = "Me",
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime,
-                    Status = a.Status
-                })
+                .Include(a => a.Doctor)
                 .ToListAsync();
-
-            UpcomingAppointments = appointments.Where(a => a.StartTime >= now).ToList();
-            PastAppointments = appointments.Where(a => a.StartTime < now).ToList();
         }
         else
         {
             // 👤 Patient : Ses propres rendez-vous
-            var appointments = await _context.Appointments
+            appointments = await _context.Appointments
                 .Where(a => a.PatientId == userId)
                 .Include(a => a.Doctor)
-                .Select(a => new AppointmentViewModel
-                {
-                    Id = a.Id,
-                    PatientName = "Me",
-                    DoctorName = a.Doctor.FullName,
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime,
-                    Status = a.Status
-                })
+                .Include(a => a.Patient)
                 .ToListAsync();
-
-            UpcomingAppointments = appointments.Where(a => a.StartTime >= now).ToList();
-            PastAppointments = appointments.Where(a => a.StartTime < now).ToList();
         }
+
+        var viewModels = appointments.Select(a => new AppointmentViewModel
+        {
+            Id = a.Id,
+            PatientName = a.Patient.FullName,
+            DoctorName = $"{a.Doctor.FullName}" + (string.IsNullOrEmpty(a.Doctor.Specialization) ? "" : $" ({a.Doctor.Specialization})"),
+            StartTime = a.StartTime,
+            EndTime = a.EndTime,
+            Status = a.Status,
+            IsValidatedByDoctor = a.Status == "Approved"
+        }).ToList();
+
+        UpcomingAppointments = viewModels.Where(a => a.StartTime >= now).OrderBy(a => a.StartTime).ToList();
+        PastAppointments = viewModels.Where(a => a.StartTime < now).OrderByDescending(a => a.StartTime).ToList();
 
         return Page();
     }
@@ -92,7 +99,20 @@ public class ManageAppointmentsModel : PageModel
         if (appointment == null) return NotFound();
 
         var userId = _userManager.GetUserId(User);
-        if (appointment.PatientId != userId && appointment.DoctorId != userId)
+        var user = await _userManager.FindByIdAsync(userId);
+        var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+        var isDoctor = appointment.DoctorId == userId;
+        var isPatient = appointment.PatientId == userId;
+
+        // ✅ Patients peuvent annuler uniquement 24h avant
+        if (!isAdmin && isPatient && (appointment.StartTime - DateTime.Now).TotalHours < 24)
+        {
+            TempData["ErrorMessage"] = "You can’t cancel less than 24 hours before the appointment.";
+            return RedirectToPage();
+        }
+
+        if (!(isAdmin || isDoctor || isPatient))
             return Forbid();
 
         _context.Appointments.Remove(appointment);

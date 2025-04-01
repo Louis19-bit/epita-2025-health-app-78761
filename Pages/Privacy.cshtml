@@ -2,7 +2,48 @@
 @model PrivacyModel
 @{
     ViewData["Title"] = "Privacy Policy";
+    Layout = "_Layout";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<link rel="stylesheet" href="~/css/privacy.css" asp-append-version="true" />
+
+<div class="privacy-wrapper">
+    <div class="privacy-header">
+        <h1>Privacy Policy</h1>
+        <p>Your privacy is important to us. Here's how we handle your data at MedLife Hospital.</p>
+    </div>
+
+    <div class="privacy-section">
+        <h3>1. Information We Collect</h3>
+        <p>We collect your name, email, and appointment details to provide medical services and administrative support.</p>
+
+        <h3>2. How We Use Your Information</h3>
+        <p>Data is used only to manage appointments, send updates, and improve patient care.</p>
+
+        <h3>3. Data Protection</h3>
+        <p>All personal data is stored securely using modern encryption and access control practices.</p>
+
+        <h3>4. Your Rights</h3>
+        <p>You can access, update, or delete your information at any time via your account or by contacting us.</p>
+
+        <h3>5. Contact</h3>
+        <p>Questions? Contact us at <strong>privacy@medlife.com</strong>.</p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        });
+
+        document.querySelectorAll('.privacy-section h3, .privacy-section p').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+    </script>
+}

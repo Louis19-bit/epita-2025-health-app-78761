@@ -1,0 +1,182 @@
+@page
+@model DoctorDaysOffModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Set Doctor Days Off";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+
+<h2>Set Days Off</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label for="Start">Start Date & Time</label>
+        <input asp-for="Input.Start" type="datetime-local" class="form-control" required value="@DateTime.Now.AddMinutes(30 - DateTime.Now.Minute % 30).ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    <div class="mb-3">
+        <label for="End">End Date & Time</label>
+        <input asp-for="Input.End" type="datetime-local" class="form-control" required value="@DateTime.Now.AddHours(1).AddMinutes(30 - DateTime.Now.Minute % 30).ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="mb-3">
+            <label for="DoctorId">Select Doctor</label>
+            <select asp-for="Input.DoctorId" class="form-control" required>
+                <option value="">-- Select Doctor --</option>
+                @foreach (var doc in Model.Doctors)
+                {
+                    <option value="@doc.Id">@doc.FullName (@doc.Specialization)</option>
+                }
+            </select>
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const startInput = document.querySelector("input[name='Input.Start']");
+            const endInput = document.querySelector("input[name='Input.End']");
+            const start = new Date(startInput.value);
+            const end = new Date(endInput.value);
+            const now = new Date();
+
+            if (end <= start) {
+                e.preventDefault();
+                alert("End date/time must be after start date/time.");
+                return;
+            }
+
+            if (start < now) {
+                e.preventDefault();
+                alert("Start date/time must be in the future.");
+            }
+        });
+    </script>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-success mt-3">@Model.Message</div>
+}
+
+<hr />
+
+<h4 class="mt-5">🔍 Search Days Off</h4>
+<input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by date or doctor...">
+
+<h4 class="mt-5">🗓️ Upcoming Days Off</h4>
+@if (!Model.ExistingDaysOff.Where(o => o.End >= DateTime.Now).Any())
+{
+    <p>No days off defined.</p>
+}
+else
+{
+    <table class="table table-bordered" id="daysOffTable">
+        <thead>
+        <tr>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Doctor</th>
+            }
+            <th>Start</th>
+            <th>End</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="futureDaysOffTable">
+        @foreach (var off in Model.ExistingDaysOff.Where(o => o.End >= DateTime.Now).OrderBy(o => o.Start))
+        {
+            <tr>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>@off.Doctor.FullName (@off.Doctor.Specialization)</td>
+                }
+                <td data-type="start">@off.Start.ToString("dd-MM-yyyy HH:mm")</td>
+                <td data-type="end">@off.End.ToString("dd-MM-yyyy HH:mm")</td>
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Doctor") || off.DoctorId == User.FindFirst("sub")?.Value)
+                    {
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@off.Id" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<h4 class="mt-5">📁 Past Days Off</h4>
+@if (!Model.ExistingDaysOff.Where(o => o.End < DateTime.Now).Any())
+{
+    <p>No past days off defined.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Doctor</th>
+                }
+                <th>Start</th>
+                <th>End</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var off in Model.ExistingDaysOff.Where(o => o.End < DateTime.Now).OrderBy(o => o.Start))
+        {
+            <tr>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>@off.Doctor.FullName (@off.Doctor.Specialization)</td>
+                }
+                <td>@off.Start.ToString("dd-MM-yyyy HH:mm")</td>
+                <td>@off.End.ToString("dd-MM-yyyy HH:mm")</td>
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Doctor") || off.DoctorId == User.FindFirst("sub")?.Value)
+                    {
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@off.Id" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("searchInput");
+            input.addEventListener("keyup", function () {
+                const filter = this.value.toLowerCase();
+                const rows = document.querySelectorAll("#daysOffTable tbody tr");
+
+                rows.forEach(row => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(filter) ? "" : "none";
+                });
+            });
+        });
+    </script>
+}
