@@ -298,3 +298,6 @@
 /Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/obj/Debug/net9.0/compressed/g1hdl3azxw-h4y6iuthdh.gz
 /Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/obj/Debug/net9.0/compressed/r371ed539j-b5diinu7sl.gz
 /Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/obj/Debug/net9.0/compressed/npttyi9pwd-4r0308zush.gz
+/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/bin/Debug/net9.0/BouncyCastle.Cryptography.dll
+/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/bin/Debug/net9.0/MailKit.dll
+/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/bin/Debug/net9.0/MimeKit.dll

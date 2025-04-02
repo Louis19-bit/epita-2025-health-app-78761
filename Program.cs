@@ -9,6 +9,9 @@ builder.Services.AddHttpClient(); // for HttpClientFactory for external API call
 // Ollama API
 builder.Services.AddSession(); // for session management and chat history
 
+// Email Service
+builder.Services.AddSingleton<EmailService>();
+
 
 // 🟢 Configure SQLite Database
 builder.Services.AddDbContext<AppDbContext>(options =>

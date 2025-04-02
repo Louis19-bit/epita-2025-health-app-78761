@@ -1,0 +1,33 @@
+@page
+@model SendEmailModel
+@{
+    ViewData["Title"] = "Send Test Email";
+    Layout = "_Layout";
+}
+
+<h2>📧 Send Email (Admin only)</h2>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success">@Model.SuccessMessage</div>
+}
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Recipient Email</label>
+        <input asp-for="Input.To" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Subject</label>
+        <input asp-for="Input.Subject" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Message (HTML supported)</label>
+        <textarea asp-for="Input.Body" class="form-control" rows="6" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Email</button>
+</form>

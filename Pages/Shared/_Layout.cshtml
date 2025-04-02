@@ -15,7 +15,12 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">MedLife Hospital</a>
+            <!-- <a class="navbar-brand" asp-area="" asp-page="/Index">MedLife Hospital</a> -->
+            <a class="navbar-brand d-flex align-items-center" asp-area="" asp-page="/Index">
+                <img src="~/images/logo.png" alt="MedLife Logo" style="height: 40px;" class="me-2" />
+                <!-- <span class="fw-bold text-primary">MedLife Hospital</span> -->
+            </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,23 +40,29 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Admin/ManageUsers">Manage Users</a>
+                                <a class="nav-link text-dark" asp-page="/Admin/ManageUsers">Roles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Manage Appointments</a>
+                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Appointments</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/DoctorDaysOff">Set Days Off</a>
+                                <a class="nav-link text-dark" asp-page="/DoctorDaysOff">Days-Off</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Admin/SendEmail">Email</a>
                             </li>
                         }
 
                         @if (User.IsInRole("Doctor"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Manage Appointments</a>
+                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Appointments</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/DoctorDaysOff">Set Days Off</a>
+                                <a class="nav-link text-dark" asp-page="/DoctorDaysOff">Days-Off</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/MedicalRecords">MedicalRecords</a>
                             </li>
                         }
 
@@ -61,7 +72,7 @@
                                 <a class="btn btn-primary mx-2" asp-page="/Appointments/BookAppointment">📅 Book Appointment</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">My Appointments</a>
+                                <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Appointments</a>
                             </li>
                         }
                     }

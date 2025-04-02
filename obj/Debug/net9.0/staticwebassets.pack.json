@@ -45,6 +45,10 @@
       "PackagePath": "staticwebassets/images/hospital-bg3.png"
     },
     {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/logo.png",
+      "PackagePath": "staticwebassets/images/logo.png"
+    },
+    {
       "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/js/site.js",
       "PackagePath": "staticwebassets/js/site.js"
     },

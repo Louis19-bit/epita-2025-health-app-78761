@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 public class AppointmentService
 {
     private readonly AppDbContext _context;
+    private readonly EmailService _emailService;
 
-    public AppointmentService(AppDbContext context)
+    public AppointmentService(AppDbContext context, EmailService emailService)
     {
         _context = context;
+        _emailService = emailService;
     }
 
     public async Task<List<TimeSlotDto>> GetAvailableTimeSlots(string doctorId, DateTime date)
@@ -29,12 +31,10 @@ public class AppointmentService
             });
         }
 
-        // 🔍 Récupération des jours off du médecin
         var doctorDaysOff = await _context.DoctorDaysOff
             .Where(d => d.DoctorId == doctorId && d.Start.Date <= date.Date && d.End.Date >= date.Date)
             .ToListAsync();
 
-        // 🔍 Récupération des rendez-vous existants
         var existingAppointments = await _context.Appointments
             .Where(a => a.DoctorId == doctorId && a.StartTime.Date == date.Date)
             .Select(a => new { a.StartTime, a.Status })
@@ -42,7 +42,6 @@ public class AppointmentService
 
         foreach (var slot in allSlots)
         {
-            // ❌ S'il y a un jour off qui couvre ce créneau, on le bloque
             bool isOff = doctorDaysOff.Any(off => slot.StartTime < off.End && slot.EndTime > off.Start);
             if (isOff)
             {
@@ -62,14 +61,12 @@ public class AppointmentService
 
     public async Task<bool> BookAppointment(Appointment appointment)
     {
-        // ❌ Empêche de réserver si jour off
         var isDoctorOff = await IsDoctorOff(appointment.DoctorId, appointment.StartTime, appointment.EndTime);
         if (isDoctorOff)
         {
             return false;
         }
 
-        // ❌ Empêche de réserver si conflit avec un autre rendez-vous approuvé
         var isSlotTaken = await _context.Appointments
             .AnyAsync(a => a.DoctorId == appointment.DoctorId &&
                            a.StartTime < appointment.EndTime &&
@@ -83,10 +80,33 @@ public class AppointmentService
 
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();
+
+        /*
+        // ✅ Email de confirmation
+        var patient = await _context.Users.FindAsync(appointment.PatientId);
+        var doctor = await _context.Users.FindAsync(appointment.DoctorId);
+
+        if (patient != null && patient.ReceiveEmailNotifications)
+        {
+            await _emailService.SendAsync(patient.Email, "📅 Appointment Confirmed",
+                $@"Hello {patient.FullName},<br><br>
+                Your appointment with Dr. {doctor?.FullName} on <strong>{appointment.StartTime:dddd dd MMM yyyy HH:mm}</strong> has been successfully booked.<br><br>
+                Regards,<br><strong>MedLife Hospital</strong>");
+        }
+
+        if (doctor != null && doctor.ReceiveEmailNotifications)
+        {
+            await _emailService.SendAsync(doctor.Email, "👨‍⚕️ New Appointment Scheduled",
+                $@"Dear Dr. {doctor.FullName},<br><br>
+                You have a new appointment with <strong>{patient?.FullName}</strong> scheduled on <strong>{appointment.StartTime:dddd dd MMM yyyy HH:mm}</strong>.<br><br>
+                Please log in to your dashboard for more details.<br><br>
+                Regards,<br><strong>MedLife Hospital</strong>");
+        }
+        */
+
         return true;
     }
 
-    // ✅ Vérifie si un créneau tombe pendant un jour off
     public async Task<bool> IsDoctorOff(string doctorId, DateTime start, DateTime end)
     {
         return await _context.DoctorDaysOff
