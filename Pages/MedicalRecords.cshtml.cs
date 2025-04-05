@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using Markdig;
 
 [Authorize]
 public class MedicalRecordsModel : PageModel
@@ -15,12 +17,18 @@ public class MedicalRecordsModel : PageModel
     private readonly AppDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IConfiguration _configuration;
 
-    public MedicalRecordsModel(AppDbContext context, UserManager<ApplicationUser> userManager, IHttpClientFactory httpClientFactory)
+    public MedicalRecordsModel(
+        AppDbContext context,
+        UserManager<ApplicationUser> userManager,
+        IHttpClientFactory httpClientFactory,
+        IConfiguration configuration)
     {
         _context = context;
         _userManager = userManager;
         _httpClientFactory = httpClientFactory;
+        _configuration = configuration;
     }
 
     public List<MedicalRecord> Records { get; set; } = new();
@@ -65,7 +73,6 @@ public class MedicalRecordsModel : PageModel
         }
 
         ChatHistory = HttpContext.Session.GetString("ChatHistory")?.Split("|||").ToList() ?? new();
-
         return Page();
     }
 
@@ -104,23 +111,28 @@ public class MedicalRecordsModel : PageModel
             .ToListAsync();
 
         var history = HttpContext.Session.GetString("ChatHistory")?.Split("|||").ToList() ?? new();
-        history.Add($"👨‍⚕️ {ChatInput}");
+        var now = DateTime.Now.ToString("HH:mm");
+        history.Add($"<div class='chat-bubble doctor'><strong class='you-label'>👨‍⚕️ You:</strong>{ChatInput}<div class='chat-time'>{now}</div></div>");
 
         var prompt = new StringBuilder();
-        prompt.AppendLine("Patient Medical History:");
+        prompt.AppendLine("You are a helpful and expert medical assistant. You are here to assist the doctor in providing medical advice.");
+        prompt.AppendLine("You have read all Pubmed and Vidal. You NEED to answer the question in a very concise and precise way.");
+        prompt.AppendLine("⚠️ You MUST answer in English ONLY.");
+        prompt.AppendLine("Here is the medical history of the patient:");
+        prompt.AppendLine($"- Patient: {records.FirstOrDefault()?.Patient?.FullName}");
         foreach (var r in records)
             prompt.AppendLine($"- {r.Date:dd MMM yyyy} – {r.Title}: {r.Description}");
-
-        prompt.AppendLine("\nConversation:");
+        prompt.AppendLine("\nConversation so far:");
         foreach (var msg in history)
-            prompt.AppendLine(msg);
+            prompt.AppendLine(Markdig.Markdown.ToPlainText(msg));
 
         try
         {
+            var modelName = _configuration["AISettings:Model"] ?? "qwen2.5:0.5b";
             var client = _httpClientFactory.CreateClient();
             var response = await client.PostAsJsonAsync("http://localhost:11434/api/generate", new
             {
-                model = "qwen2.5:0.5b",
+                model = modelName,
                 prompt = prompt.ToString(),
                 stream = false
             });
@@ -129,10 +141,14 @@ public class MedicalRecordsModel : PageModel
             {
                 var json = await response.Content.ReadFromJsonAsync<JsonElement>();
                 var reply = json.GetProperty("response").GetString();
-                history.Add($"🤖 {reply}");
+                var html = Markdig.Markdown.ToHtml(reply ?? "");
+                history.Add($"<div class='chat-bubble ai'><strong>🤖 AI:</strong><br>{html}<div class='chat-time'>{now}</div></div>");
                 HttpContext.Session.SetString("ChatHistory", string.Join("|||", history));
             }
-            else AIDisabled = true;
+            else
+            {
+                AIDisabled = true;
+            }
         }
         catch (Exception ex)
         {
@@ -140,7 +156,7 @@ public class MedicalRecordsModel : PageModel
             AIDisabled = true;
         }
 
-        return RedirectToPage(new { patientId });
+        return Redirect("/MedicalRecords?patientId=" + patientId + "#chat");
     }
 
     public IActionResult OnPostResetChat(string patientId)

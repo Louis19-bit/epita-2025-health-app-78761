@@ -70,7 +70,7 @@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Status</th>
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin") || User.IsInRole("Patient"))
                 {
                     <th>Actions</th>
                 }
@@ -85,12 +85,25 @@
                     <td>@appointment.StartTime.ToString("dd-MM-yyyy HH:mm")</td>
                     <td>@appointment.EndTime.ToString("dd-MM-yyyy HH:mm")</td>
                     <td>@appointment.Status</td>
-                    @if (User.IsInRole("Admin"))
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("Patient"))
                     {
                         <td>
-                            <form method="post" asp-page-handler="Delete" asp-route-id="@appointment.Id" class="d-inline">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@appointment.Id" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            }
+
+                            @if (User.IsInRole("Patient") && appointment.Status == "Completed" && !appointment.HasFeedback)
+                            {
+                                <a class="btn btn-outline-success btn-sm"
+                                   asp-page="/Feedback/AddFeedback"
+                                   asp-route-appointmentId="@appointment.Id">
+                                    Leave Feedback
+                                </a>
+                            }
                         </td>
                     }
                 </tr>

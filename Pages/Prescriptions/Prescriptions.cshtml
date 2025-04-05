@@ -1,0 +1,115 @@
+@page
+@model PrescriptionsModel
+@{
+    ViewData["Title"] = "Prescriptions";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Prescriptions</h2>
+    @if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+    {
+        <a asp-page="/Prescriptions/ExportPrescriptions" class="btn btn-primary">Export Prescriptions</a>
+    }
+</div>
+
+@if (User.IsInRole("Doctor"))
+{
+    <form method="post" class="border p-3 rounded mb-4 bg-light">
+        <div class="row mb-2">
+            <div class="col">
+                <label>Patient</label>
+                <select class="form-control" asp-for="Input.PatientId">
+                    <option value="">-- Select --</option>
+                    @foreach (var p in Model.Patients)
+                    {
+                        <option value="@p.Id">@p.FullName (@p.Email)</option>
+                    }
+                </select>
+            </div>
+            <div class="col">
+                <label>Medication</label>
+                <input asp-for="Input.Medication" class="form-control" required />
+            </div>
+            <div class="col">
+                <label>Dosage</label>
+                <input asp-for="Input.Dosage" class="form-control" required />
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                <label>Instructions</label>
+                <textarea asp-for="Input.Instructions" class="form-control"></textarea>
+            </div>
+            <div class="col">
+                <label>Issue Date</label>
+                <input asp-for="Input.IssueDate" type="date" class="form-control" required />
+            </div>
+            <div class="col">
+                <label>Expiration Date</label>
+                <input asp-for="Input.ExpirationDate" type="date" class="form-control" />
+            </div>
+        </div>
+        <button class="btn btn-success">Add Prescription</button>
+    </form>
+}
+
+<input type="text" id="searchInput" class="form-control mb-3" placeholder="Search prescriptions..." />
+
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+    <tr>
+        <th>Medication</th>
+        <th>Dosage</th>
+        <th>Instructions</th>
+        <th>Issued</th>
+        <th>Expires</th>
+        <th>Doctor</th>
+        <th>Patient</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="prescriptionsTable">
+    @foreach (var p in Model.Prescriptions)
+    {
+        <tr>
+            <td>@p.Medication</td>
+            <td>@p.Dosage</td>
+            <td>@p.Instructions</td>
+            <td>@p.IssueDate.ToShortDateString()</td>
+            <td>@(p.ExpirationDate?.ToShortDateString() ?? "-")</td>
+            <td>@p.Doctor?.FullName</td>
+            <td>@p.Patient?.FullName</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" asp-route-id="@p.Id" onsubmit="return confirm('Are you sure you want to delete this prescription?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                @if (User.IsInRole("Doctor"))
+                {
+                    <form method="post" asp-page-handler="SendToPharmacy" asp-route-id="@p.Id">
+                        <button type="submit" class="btn btn-primary btn-sm mt-1">Send to Pharmacy</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            var searchValue = this.value.toLowerCase();
+            var rows = document.querySelectorAll('#prescriptionsTable tr');
+            rows.forEach(function(row) {
+                var cells = row.querySelectorAll('td');
+                var match = false;
+                cells.forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().includes(searchValue)) {
+                        match = true;
+                    }
+                });
+                row.style.display = match ? '' : 'none';
+            });
+        });
+    </script>
+}

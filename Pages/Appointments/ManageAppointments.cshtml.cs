@@ -34,6 +34,7 @@ public class ManageAppointmentsModel : PageModel
         public DateTime EndTime { get; set; }
         public string Status { get; set; } = string.Empty;
         public bool IsValidatedByDoctor { get; set; }
+        public bool HasFeedback { get; set; }
     }
 
     public async Task<IActionResult> OnGetAsync()
@@ -48,10 +49,8 @@ public class ManageAppointmentsModel : PageModel
         var now = DateTime.Now;
 
         List<Appointment> appointments;
-
         if (IsAdmin)
         {
-            // 👑 Admin : Voir tous les rendez-vous
             appointments = await _context.Appointments
                 .Include(a => a.Patient)
                 .Include(a => a.Doctor)
@@ -59,7 +58,6 @@ public class ManageAppointmentsModel : PageModel
         }
         else if (IsDoctor)
         {
-            // 🩺 Docteur : Ses rendez-vous
             appointments = await _context.Appointments
                 .Where(a => a.DoctorId == userId)
                 .Include(a => a.Patient)
@@ -68,13 +66,14 @@ public class ManageAppointmentsModel : PageModel
         }
         else
         {
-            // 👤 Patient : Ses propres rendez-vous
             appointments = await _context.Appointments
                 .Where(a => a.PatientId == userId)
                 .Include(a => a.Doctor)
                 .Include(a => a.Patient)
                 .ToListAsync();
         }
+
+        var feedbacks = await _context.Feedbacks.ToListAsync();
 
         var viewModels = appointments.Select(a => new AppointmentViewModel
         {
@@ -84,7 +83,8 @@ public class ManageAppointmentsModel : PageModel
             StartTime = a.StartTime,
             EndTime = a.EndTime,
             Status = a.Status,
-            IsValidatedByDoctor = a.Status == "Approved"
+            IsValidatedByDoctor = a.Status == "Approved",
+            HasFeedback = feedbacks.Any(f => f.AppointmentId == a.Id)
         }).ToList();
 
         UpcomingAppointments = viewModels.Where(a => a.StartTime >= now).OrderBy(a => a.StartTime).ToList();
@@ -105,7 +105,6 @@ public class ManageAppointmentsModel : PageModel
         var isDoctor = appointment.DoctorId == userId;
         var isPatient = appointment.PatientId == userId;
 
-        // ✅ Patients peuvent annuler uniquement 24h avant
         if (!isAdmin && isPatient && (appointment.StartTime - DateTime.Now).TotalHours < 24)
         {
             TempData["ErrorMessage"] = "You can’t cancel less than 24 hours before the appointment.";

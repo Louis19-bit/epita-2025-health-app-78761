@@ -1,0 +1,72 @@
+@page
+@model AppointmentPoliciesModel
+@{
+    ViewData["Title"] = "Appointment Policies";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/privacy.css" asp-append-version="true" />
+
+<div class="privacy-wrapper">
+    <div class="privacy-header">
+        <h1>Appointment Policies</h1>
+        <p>Understand how appointment scheduling, cancellation, and rescheduling work at MedLife Hospital.</p>
+    </div>
+
+    <div class="privacy-section">
+        <h3>1. Booking Policy</h3>
+        <p>
+            You may book appointments with available doctors through your online account. All time slots are displayed based on real-time availability and doctors' schedules.
+        </p>
+
+        <h3>2. Cancellation Policy</h3>
+        <ul>
+            <li>Appointments must be cancelled at least <strong>48 hours in advance</strong>.</li>
+            <li>If you try to cancel less than 48 hours before the appointment, cancellation will be blocked.</li>
+            <li>For emergency cancellations, please contact our support team.</li>
+        </ul>
+
+        <h3>3. Rescheduling Policy</h3>
+        <ul>
+            <li>Appointments may be rescheduled <strong>up to 48 hours before</strong> the scheduled time.</li>
+            <li>After that, the system will prevent changes.</li>
+        </ul>
+
+        <h3>4. Reminders & Notifications</h3>
+        <p>
+            You will receive an email notification confirming your appointment. A reminder will be sent automatically <strong>24 hours</strong> before the appointment.
+        </p>
+
+        <h3>5. Telehealth Appointments</h3>
+        <p>
+            If your appointment is virtual, you will receive a secure link to access the teleconsultation. This link is active only within 10 minutes of the appointment time.
+        </p>
+
+        <h3>6. Late Arrival</h3>
+        <p>
+            Please arrive 10 minutes before your scheduled time. If you are more than 15 minutes late, the doctor may cancel the appointment or ask you to reschedule.
+        </p>
+
+        <h3>7. Need Help?</h3>
+        <p>
+            Contact us at <strong>appointments@medlife.com</strong> for any questions or assistance.
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        });
+
+        document.querySelectorAll('.privacy-section h3, .privacy-section p, .privacy-section ul').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+    </script>
+}

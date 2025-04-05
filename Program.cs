@@ -12,6 +12,8 @@ builder.Services.AddSession(); // for session management and chat history
 // Email Service
 builder.Services.AddSingleton<EmailService>();
 
+// Enregistrer ReminderService dans le conteneur DI
+builder.Services.AddTransient<ReminderService>();
 
 // 🟢 Configure SQLite Database
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -69,6 +71,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseSession();
 app.UseAuthorization();
+
+//if (!app.Environment.IsDevelopment())
+//{
+app.UseExceptionHandler("/Error"); // Handle errors properly display error page instead of JSON
+//}
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

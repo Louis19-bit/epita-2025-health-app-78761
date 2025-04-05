@@ -49,6 +49,10 @@
               "target": "Package",
               "version": "[4.11.0, )"
             },
+            "Markdig": {
+              "target": "Package",
+              "version": "[0.40.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.3, )"
@@ -70,6 +74,14 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[7.3.2, )"
+            },
+            "itext7": {
+              "target": "Package",
+              "version": "[9.1.0, )"
+            },
+            "itext7.bouncy-castle-adapter": {
+              "target": "Package",
+              "version": "[9.1.0, )"
             }
           },
           "imports": [

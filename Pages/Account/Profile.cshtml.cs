@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HospitalAppointmentSystem.Models;
 
 [Authorize]
 public class ProfileModel : PageModel
@@ -22,6 +26,7 @@ public class ProfileModel : PageModel
     }
 
     public List<string> MedicalHistory { get; set; } = new();
+    public List<Prescription> Prescriptions { get; set; } = new();
 
     [BindProperty]
     public InputModel Input { get; set; } = new();
@@ -53,6 +58,10 @@ public class ProfileModel : PageModel
         if (User.IsInRole("Patient"))
         {
             MedicalHistory = await GetMedicalSummary(user.Id);
+            Prescriptions = await _context.Prescriptions
+                .Where(p => p.PatientId == user.Id)
+                .OrderByDescending(p => p.IssueDate)
+                .ToListAsync();
         }
 
         return Page();

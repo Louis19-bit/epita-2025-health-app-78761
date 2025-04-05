@@ -1,0 +1,82 @@
+@page
+@model ExportPrescriptionsModel
+@{
+    ViewData["Title"] = "Export Prescriptions";
+}
+
+<h2>\📤 Export Prescriptions</h2>
+
+<form method="get">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Filter by Patient</label>
+            <select asp-for="PatientId" class="form-select">
+                <option value="">All Patients</option>
+                @foreach (var patient in Model.Patients)
+                {
+                    <option value="@patient.Id">@patient.FullName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Start Date</label>
+            <input asp-for="StartDate" type="date" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>End Date</label>
+            <input asp-for="EndDate" type="date" class="form-control" />
+        </div>
+        <div class="col-md-2 align-self-end">
+            <button class="btn btn-outline-primary w-100">Apply Filters</button>
+        </div>
+    </div>
+</form>
+
+<div class="btn-group mt-2">
+    <a asp-page-handler="DownloadCsv"
+       asp-route-patientId="@Model.PatientId"
+       asp-route-startDate="@(Model.StartDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-dd") : "")"
+       asp-route-endDate="@(Model.EndDate.HasValue ? Model.EndDate.Value.ToString("yyyy-MM-dd") : "")"
+       class="btn btn-outline-success">Download CSV</a>
+
+    <a asp-page-handler="DownloadPdf"
+       asp-route-patientId="@Model.PatientId"
+       asp-route-startDate="@(Model.StartDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-dd") : "")"
+       asp-route-endDate="@(Model.EndDate.HasValue ? Model.EndDate.Value.ToString("yyyy-MM-dd") : "")"
+       class="btn btn-outline-danger">Download PDF</a>
+</div>
+
+@if (Model.FilteredPrescriptions.Any())
+{
+    <table class="table table-bordered table-hover mt-4">
+        <thead class="table-light">
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Medication</th>
+                <th>Dosage</th>
+                <th>Instructions</th>
+                <th>Issue Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.FilteredPrescriptions)
+            {
+                <tr>
+                    <td>@p.Patient.FullName</td>
+                    <td>@p.Doctor.FullName</td>
+                    <td>@p.Medication</td>
+                    <td>@p.Dosage</td>
+                    <td>@p.Instructions</td>
+                    <td>@p.IssueDate.ToString("yyyy-MM-dd")</td>
+                    <td>@p.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No prescriptions found with these filters.</p>
+}

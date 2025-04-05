@@ -1,3 +1,4 @@
+using HospitalAppointmentSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,5 +11,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<DoctorDayOff> DoctorDaysOff { get; set; }
     public DbSet<MedicalRecord> MedicalRecords { get; set; }
-
+    public DbSet<Feedback> Feedbacks { get; set; }
+    public DbSet<Prescription> Prescriptions { get; set; }
 }

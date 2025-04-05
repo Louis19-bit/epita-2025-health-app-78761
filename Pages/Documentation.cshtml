@@ -1,0 +1,190 @@
+@page
+@model HospitalAppointmentSystem.Pages.Documentation
+@{
+    ViewData["Title"] = "Documentation";
+    Layout = "_Layout";
+}
+
+<h1 class="text-center my-4">📚 Project Documentation – MedLife Hospital</h1>
+<p class="text-center text-muted"><em>Default credentials: Admin: <strong><em>Admin@123</em></strong> | Doctor / Patient / Test Accounts: <strong><em>pass@123</em></strong></em></p>
+<hr />
+
+<div class="text-center mb-5">
+    <a class="btn btn-outline-primary btn-lg" href="/docs/MedLife_Development_Report.pdf" target="_blank">
+        📄 Download Full Project Report (PDF)
+    </a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- User Roles -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-primary hover-effect">
+                <div class="card-header bg-primary text-white">
+                    <h3>👥 User Roles</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Admin</strong>: Manages users, appointments, emails, and inactive periods.</li>
+                        <li><strong>Doctor</strong>: Approves appointments, sets availability, manages medical records.</li>
+                        <li><strong>Patient</strong>: Books appointments, provides feedback, views personal data.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking System -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-success hover-effect">
+                <div class="card-header bg-success text-white">
+                    <h3>📅 Booking System</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Appointments: 30-minute slots between 9 AM and 5 PM (excluding lunch break).</li>
+                        <li>Only future slots allowed, excluding doctor's days off and booked times.</li>
+                        <li>Doctor approval required for pending appointments.</li>
+                        <li>Cancellation possible only 24h before — otherwise a polite warning is shown.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Integration -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-info hover-effect">
+                <div class="card-header bg-info text-white">
+                    <h3>🧠 AI Integration</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Doctors can analyze medical records using a local AI assistant (Ollama – Qwen2.5).</li>
+                        <li>Prompt engineering ensures accurate and medically relevant responses.</li>
+                        <li>Secure and privacy-friendly: all runs locally.</li>
+                        <li>Fallback warning if AI server is unavailable.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Features -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-warning hover-effect">
+                <div class="card-header bg-warning text-white">
+                    <h3>📧 Email Features</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Appointment confirmations include .ics calendar invites for Google/Outlook.</li>
+                        <li>Manual emails can be sent by admins for debugging or communication.</li>
+                        <li>Patients can toggle email notifications from their profile page.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-danger hover-effect">
+                <div class="card-header bg-danger text-white">
+                    <h3>🔐 Security</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Access is secured with role-based restrictions on backend and frontend.</li>
+                        <li>Custom validation for booking conflicts, date logic, and business rules.</li>
+                        <li>Passwords are encrypted using ASP.NET Identity best practices.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Database Design -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-secondary hover-effect">
+                <div class="card-header bg-secondary text-white">
+                    <h3>🗄️ Database Design</h3>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Database schema available at:
+                        <a href="https://dbdiagram.io/d/HospitalDB-67f00ccb4f7afba18464ef89" target="_blank">View the ER Diagram</a>
+                    </p>
+                    <p>Tables: Users, Appointments, Feedback, DoctorDaysOff, Prescriptions, MedicalRecords.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Structure -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg border-dark hover-effect">
+                <div class="card-header bg-dark text-white">
+                    <h3>📂 Project Structure</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><code>/Pages/</code>: Razor Pages (Booking, Calendar, Profile, Admin)</li>
+                        <li><code>/Models/</code>: Entities (User, Appointment, Feedback, etc.)</li>
+                        <li><code>/Services/</code>: Business logic (AppointmentService, EmailService, AIService)</li>
+                        <li><code>/Data/</code>: `AppDbContext`, `SeedData` with default roles/users</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Functional Coverage -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg border-success hover-effect">
+                <div class="card-header bg-success text-white">
+                    <h3>✔️ Functional Coverage</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>🗓️ Book Appointment – Calendar with slot validation</li>
+                        <li>🔍 View & Filter Appointments – Filters on calendar & tables</li>
+                        <li>🧾 Appointment History – Detailed per-patient</li>
+                        <li>📨 Confirmations – Email with .ics</li>
+                        <li>♻️ Rescheduling – Rules enforced (48h limit)</li>
+                        <li>❌ Cancel Policy – 24h constraint with alert</li>
+                        <li>⚠️ Warning for Restrictions – Popup + redirection</li>
+                        <li>🔔 24h Reminders – Automatic email (optional)</li>
+                        <li>👨‍⚕️ Doctor Search – Live filter by name/specialty</li>
+                        <li>⏳ Filter by Status – Upcoming, Past, Cancelled</li>
+                        <li>📬 Change Notifications – Sent on any update</li>
+                        <li>🌟 Feedback – Stars + comment (1/appointment)</li>
+                        <li>💻 Telehealth Ready – Field for link exists (optional)</li>
+                        <li>👤 Profile & Medical Info – Editable by user</li>
+                        <li>📜 Policy Display – Linked from booking and cancel screens</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg border-danger hover-effect">
+                <div class="card-header bg-danger text-white">
+                    <h3>🚧 Challenges & Solutions</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Overlapping appointments:</strong> Solved with EF Core time-range queries.</li>
+                        <li><strong>Blocking past/final hours:</strong> Custom logic in booking form & controller.</li>
+                        <li><strong>Dynamic filtering:</strong> FullCalendar.js + AJAX + Bootstrap filters.</li>
+                        <li><strong>HTML emails:</strong> Designed responsive templates for all clients.</li>
+                        <li><strong>AI assistant:</strong> Custom prompt with patient data injection and fallback if offline.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p class="text-muted text-center mt-5">© 2025 - Dorset College Project</p>
+
+<style>
+    .hover-effect:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s;
+    }
+</style>

@@ -5,6 +5,47 @@
     Layout = "_Layout";
 }
 
+<style>
+    .chat-bubble {
+        max-width: 75%;
+        padding: 10px 14px;
+        border-radius: 18px;
+        margin-bottom: 10px;
+        word-wrap: break-word;
+        display: inline-block;
+    }
+    .chat-bubble.doctor {
+        background-color: #d4e3f8;
+        color: #003366;
+        text-align: left;
+        float: right;
+        clear: both;
+    }
+    .chat-bubble.ai {
+        background-color: #f2f2f2;
+        color: #333;
+        float: left;
+        clear: both;
+    }
+
+    .chat-bubble.doctor .you-label {
+        display: block;
+        text-align: left;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .chat-time {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 4px;
+        text-align: right;
+    }
+    .chat-bubble.ai .chat-time {
+        text-align: left;
+    }
+</style>
+
 <h2>Medical Records</h2>
 
 @if (User.IsInRole("Doctor"))
@@ -29,48 +70,48 @@
 
     <form method="post">
         <input type="hidden" name="PatientId" value="@Model.SelectedPatient.Id" />
-        <div class="mb-2">
-            <label>Title</label>
-            <input name="Title" class="form-control" required />
-        </div>
-        <div class="mb-2">
-            <label>Description</label>
-            <textarea name="Description" class="form-control"></textarea>
-        </div>
-        <div class="mb-2">
-            <label>Date</label>
-            <input name="Date" type="date" class="form-control" required />
-        </div>
+        <div class="mb-2"><label>Title</label><input name="Title" class="form-control" required /></div>
+        <div class="mb-2"><label>Description</label><textarea name="Description" class="form-control"></textarea></div>
+        <div class="mb-2"><label>Date</label><input name="Date" type="date" class="form-control" required /></div>
         <button class="btn btn-success">Add Record</button>
     </form>
 
     <hr />
 
-    <h4>💬 Medical Assistant Chat</h4>
-    <form method="post" asp-page-handler="Chat" class="d-flex gap-2 mb-2">
-        <input type="hidden" name="patientId" value="@Model.SelectedPatient.Id" />
-        <input name="ChatInput" asp-for="ChatInput" class="form-control" placeholder="Ask about this patient..." required />
-        <button class="btn btn-primary">Ask</button>
+    <h4 id="chat">💬 Medical Assistant Chat</h4>
+
+    <div class="chat-box border rounded bg-light p-3 mb-2" style="max-height: 300px; overflow-y: auto;" id="chatContainer">
+        @if (Model.ChatHistory.Any())
+        {
+            int i = 0;
+            foreach (var msg in Model.ChatHistory)
+            {
+                var anchor = msg.Contains("doctor") ? $"id='last-doctor-{i++}'" : "";
+                <div class="chat-message" @Html.Raw(anchor)>@Html.Raw(msg)</div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">Start the conversation by asking a question.</p>
+        }
+    </div>
+
+    <form method="post" asp-page-handler="Chat" id="chatForm" class="d-flex gap-2 mb-3" asp-route-patientId="@Model.SelectedPatient.Id">
+        <input asp-for="ChatInput" name="ChatInput" class="form-control" placeholder="Ask about this patient..." required />
+        <button class="btn btn-primary" type="submit">Ask</button>
     </form>
 
-    <form method="post" asp-page-handler="ResetChat">
-        <input type="hidden" name="patientId" value="@Model.SelectedPatient.Id" />
+    <form method="post" asp-page-handler="ResetChat" asp-route-patientId="@Model.SelectedPatient.Id">
         <button class="btn btn-sm btn-outline-secondary">Reset Chat</button>
     </form>
 
+    <div id="loading" class="alert alert-info d-none mt-2">
+        🤖 Analyzing with AI... Please wait...
+    </div>
+
     @if (Model.AIDisabled)
     {
-        <div class="alert alert-warning">⚠️ AI chat unavailable (Ollama not running)</div>
-    }
-
-    @if (Model.ChatHistory.Any())
-    {
-        <div class="chat-box mt-3 p-3 border rounded bg-light">
-            @foreach (var msg in Model.ChatHistory)
-            {
-                <div class="mb-2">@Html.Raw(msg)</div>
-            }
-        </div>
+        <div class="alert alert-warning mt-3">⚠️ AI chat unavailable (Ollama not running)</div>
     }
 }
 
@@ -79,10 +120,7 @@
     <h4 class="mt-4">📋 Records</h4>
     <table class="table table-bordered">
         <thead>
-        <tr>
-            <th>Date</th><th>Title</th><th>Description</th>
-            @if (User.IsInRole("Doctor")) { <th>Actions</th> }
-        </tr>
+        <tr><th>Date</th><th>Title</th><th>Description</th>@if (User.IsInRole("Doctor")) { <th>Actions</th> }</tr>
         </thead>
         <tbody>
         @foreach (var rec in Model.Records)
@@ -94,7 +132,7 @@
                 @if (User.IsInRole("Doctor"))
                 {
                     <td>
-                        <form method="post" asp-page-handler="Delete" asp-route-id="@rec.Id" class="d-inline">
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@rec.Id">
                             <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this record?')">🗑 Delete</button>
                         </form>
                     </td>
@@ -103,4 +141,27 @@
         }
         </tbody>
     </table>
+}
+
+@section Scripts {
+    <script>
+        document.getElementById("chatForm").addEventListener("submit", function () {
+            document.getElementById("loading").classList.remove("d-none");
+        });
+
+        window.onload = function () {
+            const lastDoctor = document.querySelector("[id^='last-doctor']");
+            const chatBox = document.getElementById("chatContainer");
+            if (lastDoctor) {
+                lastDoctor.scrollIntoView({ behavior: "smooth", block: "center" });
+            } else if (chatBox) {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            const chatSection = document.getElementById("chat");
+            if (chatSection && window.location.hash === "#chat") {
+                chatSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+    </script>
 }

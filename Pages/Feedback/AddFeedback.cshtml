@@ -1,0 +1,26 @@
+@page
+@model AddFeedbackModel
+@{
+    ViewData["Title"] = "Leave Feedback";
+}
+
+<h2>Leave Feedback for @Model.DoctorName</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Input.AppointmentId" />
+    <div class="mb-3">
+        <label asp-for="Input.Rating"></label>
+        <select asp-for="Input.Rating" class="form-select" required>
+            <option value="">-- Choose --</option>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i ★</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.Comment">Comment (optional)</label>
+        <textarea asp-for="Input.Comment" class="form-control" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+</form>

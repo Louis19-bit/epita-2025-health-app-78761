@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0Ah69aXCniImZSYDruS9aVFMSKFXRPZlXpuoBMJDluE=",
+  "Hash": "JqIHn2ST0zIskeIgYYkkWwLvfjK0tZRS9jd1bpyaZhw=",
   "Source": "HospitalAppointmentSystem",
   "BasePath": "_content/HospitalAppointmentSystem",
   "Mode": "Default",
@@ -4259,12 +4259,12 @@
       "OriginalItemSpec": "wwwroot/images/equipment.svg"
     },
     {
-      "Identity": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg.png",
+      "Identity": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg1.png",
       "SourceId": "HospitalAppointmentSystem",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/",
       "BasePath": "_content/HospitalAppointmentSystem",
-      "RelativePath": "images/hospital-bg#[.{fingerprint}]?.png",
+      "RelativePath": "images/hospital-bg1#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -4277,7 +4277,7 @@
       "Integrity": "PP9Drg6N8/I67fVLF2dULfvNIAv2AayMAl19MRPUkFw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/images/hospital-bg.png"
+      "OriginalItemSpec": "wwwroot/images/hospital-bg1.png"
     },
     {
       "Identity": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg2.jpg",
@@ -4299,6 +4299,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/hospital-bg2.jpg"
+    },
+    {
+      "Identity": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg2.png",
+      "SourceId": "HospitalAppointmentSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/",
+      "BasePath": "_content/HospitalAppointmentSystem",
+      "RelativePath": "images/hospital-bg2#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "26za4q3ua2",
+      "Integrity": "dlOicwRiDqmXaZ8duV+L8/CC3AihvDeIt4v0RZ2JSxY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/hospital-bg2.png"
     },
     {
       "Identity": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg3.png",
@@ -6618,7 +6639,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6671,7 +6692,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6708,7 +6729,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6755,7 +6776,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6816,7 +6837,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6861,7 +6882,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6916,7 +6937,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6977,7 +6998,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -7022,7 +7043,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -7077,7 +7098,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -7130,7 +7151,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -7167,7 +7188,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Mar 2025 09:30:20 GMT"
+          "Value": "Thu, 03 Apr 2025 08:41:05 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -16697,8 +16718,8 @@
       ]
     },
     {
-      "Route": "images/hospital-bg.0jdvtfpxkt.png",
-      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg.png",
+      "Route": "images/hospital-bg1.0jdvtfpxkt.png",
+      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -16733,7 +16754,7 @@
         },
         {
           "Name": "label",
-          "Value": "images/hospital-bg.png"
+          "Value": "images/hospital-bg1.png"
         },
         {
           "Name": "integrity",
@@ -16742,8 +16763,8 @@
       ]
     },
     {
-      "Route": "images/hospital-bg.png",
-      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg.png",
+      "Route": "images/hospital-bg1.png",
+      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -16775,6 +16796,51 @@
         {
           "Name": "integrity",
           "Value": "sha256-PP9Drg6N8/I67fVLF2dULfvNIAv2AayMAl19MRPUkFw="
+        }
+      ]
+    },
+    {
+      "Route": "images/hospital-bg2.26za4q3ua2.png",
+      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2871405"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dlOicwRiDqmXaZ8duV+L8/CC3AihvDeIt4v0RZ2JSxY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 03 Apr 2025 10:41:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "26za4q3ua2"
+        },
+        {
+          "Name": "label",
+          "Value": "images/hospital-bg2.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dlOicwRiDqmXaZ8duV+L8/CC3AihvDeIt4v0RZ2JSxY="
         }
       ]
     },
@@ -16857,6 +16923,43 @@
         {
           "Name": "integrity",
           "Value": "sha256-vEbjhbKRq4NQHp/I3i3afoQCDC6hNotpzjd6I9MaQ3k="
+        }
+      ]
+    },
+    {
+      "Route": "images/hospital-bg2.png",
+      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2871405"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dlOicwRiDqmXaZ8duV+L8/CC3AihvDeIt4v0RZ2JSxY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 03 Apr 2025 10:41:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dlOicwRiDqmXaZ8duV+L8/CC3AihvDeIt4v0RZ2JSxY="
         }
       ]
     },

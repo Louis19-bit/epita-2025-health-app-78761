@@ -64,6 +64,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vU2VuZEVtYWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Admin/SendReminders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vU2VuZFJlbWluZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Appointments/AppointmentPolicies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnRzL0FwcG9pbnRtZW50UG9saWNpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Appointments/BookAppointment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnRzL0Jvb2tBcHBvaW50bWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -76,12 +84,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnRzL19UaW1lU2xvdE9wdGlvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Calendar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ2FsZW5kYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/DoctorDaysOff.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yRGF5c09mZi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Documentation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdW1lbnRhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/ErrorDebug.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3JEZWJ1Zy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Feedback/AddFeedback.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmVlZGJhY2svQWRkRmVlZGJhY2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Feedbacks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmVlZGJhY2tzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Index.cshtml]
@@ -90,6 +118,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/MedicalRecords.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVkaWNhbFJlY29yZHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Prescriptions/ExportPrescriptions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJlc2NyaXB0aW9ucy9FeHBvcnRQcmVzY3JpcHRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Prescriptions/Prescriptions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJlc2NyaXB0aW9ucy9QcmVzY3JpcHRpb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Privacy.cshtml]

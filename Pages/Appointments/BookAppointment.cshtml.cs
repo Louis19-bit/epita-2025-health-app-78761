@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ public class BookAppointmentModel : PageModel
         public DateTime TimeSlot { get; set; }
     }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(string? doctorId, string? date)
     {
         var allUsers = await _context.Users.ToListAsync();
         Doctors = allUsers
@@ -50,9 +51,25 @@ public class BookAppointmentModel : PageModel
                 Specialization = u.Specialization ?? "General"
             }).ToList();
 
+        if (!string.IsNullOrEmpty(doctorId))
+        {
+            Input.DoctorId = doctorId;
+        }
+
+        if (!string.IsNullOrEmpty(date) &&
+            DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+        {
+            Input.Date = parsedDate;
+        }
+        else
+        {
+            Input.Date = DateTime.Today;
+            ModelState.AddModelError("", "Format de date invalide. Format attendu : yyyy-MM-dd");
+        }
+
         return Page();
     }
-
+    
     public async Task<IActionResult> OnGetLoadAvailableSlotsAsync(string doctorId, DateTime date)
     {
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
@@ -121,61 +138,57 @@ public class BookAppointmentModel : PageModel
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();
 
-        // ✅ Envoi en arrière-plan
+        // Récupérer les données à utiliser dans la tâche d’arrière‑plan
+        var patient = await _context.Users.FindAsync(patientId);
+        var doctor = await _context.Users.FindAsync(Input.DoctorId);
+
+        // Envoi de l’email en arrière-plan
         _ = Task.Run(async () =>
         {
-            var patient = await _context.Users.FindAsync(patientId);
-            var doctor = await _context.Users.FindAsync(Input.DoctorId);
-
-            string html = $@"
+            try
+            {
+                string html = $@"
             <div style='font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;'>
                 <h2 style='color: #1b6ec2;'>Appointment Confirmation</h2>
-
                 <p>Hello <strong>{patient?.FullName}</strong>,</p>
-
                 <p style='line-height: 1.6;'>
                     We’re pleased to inform you that your appointment with 
                     <strong>Dr. {doctor?.FullName}</strong> has been <span style='color: green;'>successfully booked</span> for:
                 </p>
-
                 <p style='font-size: 17px; font-weight: bold; margin: 15px 0;'>
                     📅 {startTime:dddd dd MMM yyyy} at {startTime:HH:mm}
                 </p>
-
                 <p style='margin-top: 10px;'>
                     📍 <strong>Location:</strong> MedLife Hospital
                 </p>
-
                 <p style='margin-top: 20px;'>
                     You’ll find a calendar invite attached to easily add this appointment to your agenda.
                 </p>
-
                 <hr style='margin: 30px 0;' />
-
                 <p style='color: #555;'>
                     ⏳ Once the appointment is <strong>validated by your doctor</strong>, you’ll receive another confirmation email.
                 </p>
-
                 <p style='margin-top: 30px; font-size: 14px; color: #888;'>
                     If you have any questions, feel free to reach out to our team at 
                     <a href='mailto:support@medlife.com'>support@medlife.com</a>.
                 </p>
-
                 <p style='margin-top: 40px; font-size: 13px; color: #aaa;'>
                     — The MedLife Hospital Team 🏥
                 </p>
             </div>";
 
+                string ics = GenerateIcs(appointment, $"Appointment with Dr. {doctor?.FullName}", "MedLife Hospital");
 
-            string ics = GenerateIcs(appointment, $"Appointment with Dr. {doctor?.FullName}", "MedLife Hospital");
-
-            if (patient?.Email != null)
-                await _emailService.SendWithAttachmentAsync(patient.Email, "📅 Appointment Confirmation", html, ics, "appointment.ics");
-            // notification to doctor we could create a new html template but not necessary
-            if (doctor?.Email != null)
-                await _emailService.SendWithAttachmentAsync(doctor.Email, "👨‍⚕️ New Appointment Scheduled", html, ics, "appointment.ics");
+                if (patient?.Email != null)
+                    await _emailService.SendWithAttachmentAsync(patient.Email, "📅 Appointment Confirmation", html, ics, "appointment.ics");
+                if (doctor?.Email != null)
+                    await _emailService.SendWithAttachmentAsync(doctor.Email, "👨‍⚕️ New Appointment Scheduled", html, ics, "appointment.ics");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors de l'envoi d'email en arrière-plan : " + ex.Message);
+            }
         });
-        
 
         Message = "✅ Your appointment has been booked successfully! You will receive an email confirmation if enabled, and another one once approved.";
         return Page();
@@ -190,8 +203,10 @@ public class BookAppointmentModel : PageModel
         sb.AppendLine("BEGIN:VEVENT");
         sb.AppendLine($"UID:{Guid.NewGuid()}");
         sb.AppendLine($"DTSTAMP:{DateTime.UtcNow:yyyyMMddTHHmmssZ}");
-        sb.AppendLine($"DTSTART:{appt.StartTime.ToUniversalTime():yyyyMMddTHHmmssZ}");
-        sb.AppendLine($"DTEND:{appt.EndTime.ToUniversalTime():yyyyMMddTHHmmssZ}");
+        //sb.AppendLine($"DTSTART:{appt.StartTime.ToUniversalTime():yyyyMMddTHHmmssZ}");
+        //sb.AppendLine($"DTEND:{appt.EndTime.ToUniversalTime():yyyyMMddTHHmmssZ}");
+        sb.AppendLine($"DTSTART:{appt.StartTime.AddHours(-1).ToUniversalTime():yyyyMMddTHHmmssZ}");
+        sb.AppendLine($"DTEND:{appt.EndTime.AddHours(-1).ToUniversalTime():yyyyMMddTHHmmssZ}");
         sb.AppendLine($"SUMMARY:{summary}");
         sb.AppendLine($"LOCATION:{location}");
         sb.AppendLine("DESCRIPTION:Appointment scheduled at MedLife Hospital");

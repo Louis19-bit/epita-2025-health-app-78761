@@ -33,12 +33,16 @@
       "PackagePath": "staticwebassets/images/equipment.svg"
     },
     {
-      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg.png",
-      "PackagePath": "staticwebassets/images/hospital-bg.png"
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg1.png",
+      "PackagePath": "staticwebassets/images/hospital-bg1.png"
     },
     {
       "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg2.jpg",
       "PackagePath": "staticwebassets/images/hospital-bg2.jpg"
+    },
+    {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg2.png",
+      "PackagePath": "staticwebassets/images/hospital-bg2.png"
     },
     {
       "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/images/hospital-bg3.png",

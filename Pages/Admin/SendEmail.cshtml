@@ -5,7 +5,15 @@
     Layout = "_Layout";
 }
 
-<h2>📧 Send Email (Admin only)</h2>
+<div class="d-flex justify-content-between align-items-center">
+    <h2>📧 Send Email (Admin only)</h2>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-warning" href="/Admin/SendReminders">
+            📧🔔 Envoyer des rappels
+        </a>
+    }
+</div>
 
 @if (!string.IsNullOrEmpty(Model.SuccessMessage))
 {

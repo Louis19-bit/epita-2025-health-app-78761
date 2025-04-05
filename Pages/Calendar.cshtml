@@ -1,0 +1,282 @@
+@page
+@model CalendarModel
+@attribute [Authorize]
+<!-- Restreindre l'accès aux utilisateurs connectés -->
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Appointment Calendar";
+    var isAdmin = User.IsInRole("Admin");
+    var isDoctor = User.IsInRole("Doctor");
+    var doctorId = isDoctor ? User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value : null;
+    var doctorSpecialization = isDoctor ? User.FindFirst("Specialization")?.Value : null;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (isAdmin)
+{
+    <!-- Filtres pour l'Admin -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label for="doctorFilter" class="form-label">Filter by Doctor:</label>
+            <select id="doctorFilter" class="form-select">
+                <option value="">All</option>
+                @foreach (var doctor in Model.Doctors)
+                {
+                    <option value="@doctor.Id">@doctor.FullName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="specialtyFilter" class="form-label">Filter by Specialization:</label>
+            <select id="specialtyFilter" class="form-select">
+                <option value="">All</option>
+                @foreach (var specialty in Model.Specializations.Distinct())
+                {
+                    <option value="@specialty">@specialty</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="statusFilter" class="form-label">Filter by Status:</label>
+            <select id="statusFilter" class="form-select">
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="targetDate" class="form-label">Go to Date:</label>
+            <input type="date" id="targetDate" class="form-control" />
+        </div>
+    </div>
+}
+else if (isDoctor)
+{
+    <!-- Pour Docteur : pas de filtres, valeurs fixées automatiquement -->
+    <input type="hidden" id="doctorFilter" value="@doctorId" />
+    <input type="hidden" id="specialtyFilter" value="@doctorSpecialization" />
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label for="statusFilter" class="form-label">Filter by Status:</label>
+            <select id="statusFilter" class="form-select">
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="targetDate" class="form-label">Go to Date:</label>
+            <input type="date" id="targetDate" class="form-control" />
+        </div>
+    </div>
+}
+else
+{
+    <!-- Pour Patient : on garde tous les filtres -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label for="doctorFilter" class="form-label">Filter by Doctor:</label>
+            <select id="doctorFilter" class="form-select">
+                <option value="">All</option>
+                @foreach (var doctor in Model.Doctors)
+                {
+                    <option value="@doctor.Id">@doctor.FullName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="specialtyFilter" class="form-label">Filter by Specialization:</label>
+            <select id="specialtyFilter" class="form-select">
+                <option value="">All</option>
+                @foreach (var specialty in Model.Specializations.Distinct())
+                {
+                    <option value="@specialty">@specialty</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="statusFilter" class="form-label">Filter by Status:</label>
+            <select id="statusFilter" class="form-select">
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="targetDate" class="form-label">Go to Date:</label>
+            <input type="date" id="targetDate" class="form-control" />
+        </div>
+    </div>
+}
+
+<div id="calendar" style="max-height: 75vh; overflow-y: auto;"></div>
+
+<!-- Modal for Appointment Details -->
+<div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content shadow">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventDetailsModalLabel">Appointment Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Title:</strong> <span id="eventTitle"></span></p>
+                <p><strong>Date:</strong> <span id="eventDate"></span></p>
+                <p><strong>Time:</strong> <span id="eventTime"></span></p>
+                <p><strong>Doctor:</strong> <span id="eventDoctor"></span></p>
+                <p><strong>Patient:</strong> <span id="eventPatient"></span></p>
+                <p><strong>Specialization:</strong> <span id="eventSpecialty"></span></p>
+                <p><strong>Status:</strong> <span id="eventStatus"></span></p>
+            </div>
+            <div class="modal-footer">
+                <a id="editLink" class="btn btn-warning" href="/Appointments/ManageAppointments">Edit</a>
+
+                <!-- ✅ input TOUJOURS présent -->
+                <form method="post" asp-page-handler="Delete" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="eventIdToDelete" name="id" />
+                    @if (User.IsInRole("Admin") || User.IsInRole("Patient") || User.IsInRole("Doctor"))
+                    {
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    }
+                </form>
+
+                @if (User.IsInRole("Doctor"))
+                {
+                    <form method="post" asp-page-handler="Accept" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="eventIdToAccept" name="id" />
+                        <button type="submit" class="btn btn-success" id="acceptButton">Accept</button>
+                    </form>
+                }
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fc-bg-event {
+        pointer-events: none !important;
+    }
+</style>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script>
+        const currentUserId = '@User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value';
+        const doctorSpecialization = '@doctorSpecialization';
+        const isDoctor = @(isDoctor.ToString().ToLower());
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'en',
+                initialView: 'dayGridMonth',
+                height: "auto",
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    let query = '?handler=Events';
+                    if (@(isAdmin.ToString().ToLower()))
+                    {
+                        const doctorId = document.getElementById('doctorFilter').value;
+                        const specialty = document.getElementById('specialtyFilter').value;
+                        const status = document.getElementById('statusFilter').value;
+                        query += `&doctorId=${doctorId}&specialization=${specialty}&status=${status}`;
+                    }
+                    else if (isDoctor)
+                    {
+                        const status = document.getElementById('statusFilter').value;
+                        query += `&doctorId=${currentUserId}&specialization=${doctorSpecialization}&status=${status}`;
+                    }
+                    else
+                    {
+                        const doctorId = document.getElementById('doctorFilter').value;
+                        const specialty = document.getElementById('specialtyFilter').value;
+                        const status = document.getElementById('statusFilter').value;
+                        query += `&doctorId=${doctorId}&specialization=${specialty}&status=${status}`;
+                    }
+                    fetch('/Calendar' + query)
+                        .then(response => response.json())
+                        .then(data => successCallback(data))
+                        .catch(error => failureCallback(error));
+                },
+                eventClick: function (info) {
+                    if (info.event.display && info.event.display === "background") return;
+
+                    document.getElementById('eventTitle').textContent = info.event.title;
+                    document.getElementById('eventDate').textContent = info.event.start.toLocaleDateString('en-US');
+                    document.getElementById('eventTime').textContent = info.event.start.toLocaleTimeString('en-US');
+                    document.getElementById('eventDoctor').textContent = info.event.extendedProps.doctor;
+                    document.getElementById('eventPatient').textContent = info.event.extendedProps.patient;
+                    document.getElementById('eventSpecialty').textContent = info.event.extendedProps.specialization;
+                    document.getElementById('eventStatus').textContent = info.event.extendedProps.status;
+
+                    const deleteInput = document.getElementById('eventIdToDelete');
+                    if (deleteInput) deleteInput.value = info.event.id;
+
+                    const acceptInput = document.getElementById('eventIdToAccept');
+                    if (acceptInput) acceptInput.value = info.event.id;
+
+                    const editLink = document.getElementById('editLink');
+                    if (editLink) editLink.href = `/Appointments/ManageAppointments?id=${info.event.id}`;
+
+                    // Masquer le bouton "Accept" si le rendez-vous est déjà approuvé
+                    const acceptButton = document.getElementById('acceptButton');
+                    if (acceptButton) {
+                        if (info.event.extendedProps.status === "Approved") {
+                            acceptButton.style.display = 'none';
+                        } else {
+                            acceptButton.style.display = 'inline-block';
+                        }
+                    }
+
+                    new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+                },
+                dateClick: function(info) {
+                    if (isDoctor) {
+                        alert("You can't book an appointment as a doctor. You need to be a patient.");
+                        return;
+                    }
+                    window.location.href = `/Appointments/BookAppointment?date=${encodeURIComponent(info.dateStr)}&doctorId=${document.getElementById('doctorFilter').value}`;
+                }
+            });
+
+            calendar.render();
+
+            document.getElementById('targetDate').addEventListener('change', function () {
+                const date = this.value;
+                if (date) calendar.gotoDate(date);
+            });
+
+            if (@(isAdmin.ToString().ToLower()))
+            {
+                document.getElementById('doctorFilter').addEventListener('change', () => calendar.refetchEvents());
+                document.getElementById('specialtyFilter').addEventListener('change', () => calendar.refetchEvents());
+                document.getElementById('statusFilter').addEventListener('change', () => calendar.refetchEvents());
+            }
+            else if (isDoctor)
+            {
+                document.getElementById('statusFilter').addEventListener('change', () => calendar.refetchEvents());
+            }
+            else
+            {
+                document.getElementById('doctorFilter').addEventListener('change', () => calendar.refetchEvents());
+                document.getElementById('specialtyFilter').addEventListener('change', () => calendar.refetchEvents());
+                document.getElementById('statusFilter').addEventListener('change', () => calendar.refetchEvents());
+            }
+});
+    </script>
+}

@@ -1,0 +1,53 @@
+@page
+@model FeedbacksModel
+@{
+    ViewData["Title"] = "Feedbacks";
+}
+
+<h2>Feedbacks</h2>
+
+@if (!Model.Feedbacks.Any())
+{
+    <p>No feedbacks available.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Patient</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Doctor</th>
+            }
+            <th>Rating</th>
+            <th>Comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var fb in Model.Feedbacks)
+        {
+            <tr>
+                <td>@fb.Date.ToString("dd/MM/yyyy")</td>
+                <td>@fb.PatientName</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>@fb.DoctorName</td>
+                }
+                <td>
+                    @for (int i = 1; i <= fb.Rating; i++)
+                    {
+                        <span style="color: gold;">★</span>
+                    }
+                    @for (int i = fb.Rating + 1; i <= 5; i++)
+                    {
+                        <span style="color: lightgray;">★</span>
+                    }
+                </td>
+                <td>@(string.IsNullOrWhiteSpace(fb.Comment) ? "-" : fb.Comment)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

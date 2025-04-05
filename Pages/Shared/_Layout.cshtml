@@ -3,6 +3,26 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    .navbar-nav .nav-link,
+    .navbar-nav .btn {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .btn:hover {
+        color: #1b6ec2 !important;
+        transform: translateY(-2px);
+    }
+
+    .navbar-nav .btn {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-nav .btn:hover {
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+</style>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,12 +47,25 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                    </li>
-                    <li class="nav-item">
+                @if (User.Identity is { IsAuthenticated: true })
+                {
+                    @if (User.IsInRole("Patient"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                    }
+                }
+                <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                     </li>
+
+                    @if (!User.Identity!.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary" asp-page="/Documentation">Documentation</a>
+                        </li>
+                    }
 
                     @* Role-Based Navigation *@
                     @if (User.Identity.IsAuthenticated)
@@ -51,6 +84,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/Admin/SendEmail">Email</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Prescriptions/Prescriptions">Prescriptions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Calendar">Calendar</a>
+                            </li>
                         }
 
                         @if (User.IsInRole("Doctor"))
@@ -64,6 +103,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/MedicalRecords">MedicalRecords</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Prescriptions/Prescriptions">Prescriptions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Calendar">Calendar</a>
+                            </li>
                         }
 
                         @if (User.IsInRole("Patient"))
@@ -71,8 +116,16 @@
                             <li class="nav-item">
                                 <a class="btn btn-primary mx-2" asp-page="/Appointments/BookAppointment">📅 Book Appointment</a>
                             </li>
+                            <!--
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/Appointments/ManageAppointments">Appointments</a>
+                            </li>
+                            -->
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Prescriptions/Prescriptions">Prescriptions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Calendar">Calendar</a>
                             </li>
                         }
                     }
@@ -118,11 +171,26 @@
     </main>
 </div>
 
+<!-- Footer ->
 <footer class="footer text-center border-top py-3 mt-auto">
     <div class="container">
         &copy; 2025 - MedLife Hospital - <a asp-page="/Privacy">Privacy</a>
     </div>
 </footer>
+-->
+
+@{
+    var currentPath = Context.Request.Path.Value?.ToLowerInvariant();
+}
+@if (currentPath == "/" || currentPath == "/privacy")
+{
+    <footer class="footer text-center border-top py-3 mt-auto">
+        <div class="container">
+            &copy; 2025 - MedLife Hospital - <a asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+}
+
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
