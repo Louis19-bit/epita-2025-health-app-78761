@@ -74,7 +74,7 @@ app.UseAuthorization();
 
 //if (!app.Environment.IsDevelopment())
 //{
-app.UseExceptionHandler("/Error"); // Handle errors properly display error page instead of JSON
+    app.UseExceptionHandler("/Error"); // Handle errors properly display error page instead of JSON
 //}
 
 app.UseSwagger();

@@ -108,6 +108,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmVlZGJhY2svQWRkRmVlZGJhY2suY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Feedback/DeleteFeedback.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmVlZGJhY2svRGVsZXRlRmVlZGJhY2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Feedback/Thanks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmVlZGJhY2svVGhhbmtzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/Pages/Feedbacks.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmVlZGJhY2tzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

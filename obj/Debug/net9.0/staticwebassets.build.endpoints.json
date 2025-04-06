@@ -9428,6 +9428,88 @@
       ]
     },
     {
+      "Route": "docs/MedLife_Development_Report.gg1tsi2pdk.pdf",
+      "AssetFile": "docs/MedLife_Development_Report.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "66817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 05 Apr 2025 23:37:33 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gg1tsi2pdk"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08="
+        },
+        {
+          "Name": "label",
+          "Value": "docs/MedLife_Development_Report.pdf"
+        }
+      ]
+    },
+    {
+      "Route": "docs/MedLife_Development_Report.pdf",
+      "AssetFile": "docs/MedLife_Development_Report.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "66817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 05 Apr 2025 23:37:33 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08="
+        }
+      ]
+    },
+    {
       "Route": "favicon.61n19gt1b8.ico",
       "AssetFile": "favicon.ico.gz",
       "Selectors": [

@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
+      "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/docs/MedLife_Development_Report.pdf",
+      "PackagePath": "staticwebassets/docs/MedLife_Development_Report.pdf"
+    },
+    {
       "Id": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
     },

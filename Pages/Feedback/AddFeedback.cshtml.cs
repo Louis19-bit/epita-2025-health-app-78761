@@ -41,7 +41,7 @@ public class AddFeedbackModel : PageModel
             .Include(a => a.Doctor)
             .FirstOrDefaultAsync(a => a.Id == appointmentId && a.PatientId == user.Id);
 
-        if (appointment == null || appointment.Status != "Completed")
+        if (appointment == null || (appointment.Status != "Completed" && appointment.Status != "Approved"))
             return NotFound();
 
         DoctorName = appointment.Doctor.FullName;
@@ -63,7 +63,7 @@ public class AddFeedbackModel : PageModel
             .Include(a => a.Doctor)
             .FirstOrDefaultAsync(a => a.Id == Input.AppointmentId && a.PatientId == user.Id);
 
-        if (appointment == null || appointment.Status != "Completed")
+        if (appointment == null || (appointment.Status != "Completed" && appointment.Status != "Approved"))
             return NotFound();
 
         var already = await _context.Feedbacks.AnyAsync(f => f.AppointmentId == appointment.Id);
@@ -79,6 +79,9 @@ public class AddFeedbackModel : PageModel
         });
 
         await _context.SaveChangesAsync();
+
+        TempData["SuccessMessage"] = "Your feedback has been submitted successfully.";
+        //return RedirectToPage("/ManageAppointments");
         return RedirectToPage("/Feedback/Thanks");
     }
 }

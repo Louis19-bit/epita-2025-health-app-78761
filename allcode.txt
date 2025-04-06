@@ -6454,13 +6454,25 @@ public class AppointmentPoliciesModel : PageModel
                                 </form>
                             }
 
-                            @if (User.IsInRole("Patient") && appointment.Status == "Completed" && !appointment.HasFeedback)
+                            @if (User.IsInRole("Patient") && 
+                                (appointment.Status == "Approved" || appointment.Status == "Completed"))
                             {
-                                <a class="btn btn-outline-success btn-sm"
-                                   asp-page="/Feedback/AddFeedback"
-                                   asp-route-appointmentId="@appointment.Id">
-                                    Leave Feedback
-                                </a>
+                                @if (!appointment.HasFeedback)
+                                {
+                                    <a class="btn btn-outline-success btn-sm"
+                                       asp-page="/Feedback/AddFeedback"
+                                       asp-route-appointmentId="@appointment.Id">
+                                        Leave Feedback
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-danger btn-sm"
+                                       asp-page="/Feedback/DeleteFeedback"
+                                       asp-route-appointmentId="@appointment.Id">
+                                        Delete Feedback
+                                    </a>
+                                }
                             }
                         </td>
                     }
@@ -6751,7 +6763,7 @@ public class PrivacyModel : PageModel
 <hr />
 
 <div class="text-center mb-5">
-    <a class="btn btn-outline-primary btn-lg" href="/docs/Hospital_Project_Report.pdf" target="_blank">
+    <a class="btn btn-outline-primary btn-lg" href="/docs/MedLife_Development_Report.pdf" target="_blank">
         📄 Download Full Project Report (PDF)
     </a>
 </div>
@@ -8219,7 +8231,107 @@ public class FeedbacksModel : PageModel
 </html>=== ./Pages/Shared/_ValidationScriptsPartial.cshtml ===
 ﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
-=== ./Pages/Feedback/AddFeedback.cshtml ===
+=== ./Pages/Feedback/DeleteFeedback.cshtml ===
+@page
+@model DeleteFeedbackModel
+@{
+    ViewData["Title"] = "Delete Feedback";
+}
+
+<div class="container mt-5 text-center">
+    <h2>Delete Feedback</h2>
+    <p class="text-danger">Are you sure you want to delete your feedback for <strong>@Model.DoctorName</strong>?</p>
+
+    <form method="post">
+        <input type="hidden" asp-for="AppointmentId" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a asp-page="/Appointments/ManageAppointments" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+=== ./Pages/Feedback/Thanks.cshtml ===
+@page
+@{
+    ViewData["Title"] = "Thank You";
+    Layout = "_Layout";
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60vh;">
+    <div class="text-center">
+        <h1 class="display-4 text-success mb-4">🎉 Thank You!</h1>
+        <p class="lead">Your feedback has been submitted successfully.</p>
+
+        <a asp-page="/Appointments/ManageAppointments" class="btn btn-primary mt-4 px-4 py-2">
+            Back to Appointments
+        </a>
+    </div>
+</div>
+=== ./Pages/Feedback/Thanks.cshtml.cs ===
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace HospitalAppointmentSystem.Pages.Feedback;
+
+public class Thanks : PageModel
+{
+    public void OnGet()
+    {
+        
+    }
+}=== ./Pages/Feedback/DeleteFeedback.cshtml.cs ===
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+
+namespace HospitalAppointmentSystem.Pages.Feedback;
+
+[Authorize(Roles = "Patient")]
+public class DeleteFeedbackModel : PageModel
+{
+    private readonly AppDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
+
+    public DeleteFeedbackModel(AppDbContext context, UserManager<ApplicationUser> userManager)
+    {
+        _context = context;
+        _userManager = userManager;
+    }
+
+    [BindProperty]
+    public int AppointmentId { get; set; }
+
+    public string DoctorName { get; set; } = "";
+
+    public async Task<IActionResult> OnGetAsync(int appointmentId)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var feedback = await _context.Feedbacks
+            .Include(f => f.Appointment)
+            .ThenInclude(a => a.Doctor)
+            .FirstOrDefaultAsync(f => f.AppointmentId == appointmentId && f.PatientId == user.Id);
+
+        if (feedback == null) return NotFound();
+
+        DoctorName = feedback.Appointment.Doctor.FullName;
+        AppointmentId = appointmentId;
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var feedback = await _context.Feedbacks
+            .FirstOrDefaultAsync(f => f.AppointmentId == AppointmentId && f.PatientId == user.Id);
+
+        if (feedback == null) return NotFound();
+
+        _context.Feedbacks.Remove(feedback);
+        await _context.SaveChangesAsync();
+
+        TempData["SuccessMessage"] = "Your feedback has been deleted.";
+        return RedirectToPage("/Appointments/ManageAppointments");
+    }
+}=== ./Pages/Feedback/AddFeedback.cshtml ===
 @page
 @model AddFeedbackModel
 @{
@@ -8290,7 +8402,7 @@ public class AddFeedbackModel : PageModel
             .Include(a => a.Doctor)
             .FirstOrDefaultAsync(a => a.Id == appointmentId && a.PatientId == user.Id);
 
-        if (appointment == null || appointment.Status != "Completed")
+        if (appointment == null || (appointment.Status != "Completed" && appointment.Status != "Approved"))
             return NotFound();
 
         DoctorName = appointment.Doctor.FullName;
@@ -8312,7 +8424,7 @@ public class AddFeedbackModel : PageModel
             .Include(a => a.Doctor)
             .FirstOrDefaultAsync(a => a.Id == Input.AppointmentId && a.PatientId == user.Id);
 
-        if (appointment == null || appointment.Status != "Completed")
+        if (appointment == null || (appointment.Status != "Completed" && appointment.Status != "Approved"))
             return NotFound();
 
         var already = await _context.Feedbacks.AnyAsync(f => f.AppointmentId == appointment.Id);
@@ -8328,6 +8440,9 @@ public class AddFeedbackModel : PageModel
         });
 
         await _context.SaveChangesAsync();
+
+        TempData["SuccessMessage"] = "Your feedback has been submitted successfully.";
+        //return RedirectToPage("/ManageAppointments");
         return RedirectToPage("/Feedback/Thanks");
     }
 }
@@ -10753,7 +10868,7 @@ app.UseAuthorization();
 
 //if (!app.Environment.IsDevelopment())
 //{
-app.UseExceptionHandler("/Error"); // Handle errors properly display error page instead of JSON
+    app.UseExceptionHandler("/Error"); // Handle errors properly display error page instead of JSON
 //}
 
 app.UseSwagger();

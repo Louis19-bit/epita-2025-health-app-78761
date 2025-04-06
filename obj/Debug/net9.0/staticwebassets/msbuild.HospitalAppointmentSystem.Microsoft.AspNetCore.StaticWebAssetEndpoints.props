@@ -24,6 +24,18 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"667"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\u0022"},{"Name":"Last-Modified","Value":"Fri, 14 Mar 2025 11:09:00 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/docs/MedLife_Development_Report.gg1tsi2pdk.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\docs\MedLife_Development_Report.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"gg1tsi2pdk"},{"Name":"integrity","Value":"sha256-YM\u002BO3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08="},{"Name":"label","Value":"_content/HospitalAppointmentSystem/docs/MedLife_Development_Report.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"66817"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u0022YM\u002BO3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08=\u0022"},{"Name":"Last-Modified","Value":"Sat, 05 Apr 2025 23:37:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/docs/MedLife_Development_Report.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\docs\MedLife_Development_Report.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-YM\u002BO3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"66817"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u0022YM\u002BO3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08=\u0022"},{"Name":"Last-Modified","Value":"Sat, 05 Apr 2025 23:37:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/HospitalAppointmentSystem/favicon.61n19gt1b8.ico">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

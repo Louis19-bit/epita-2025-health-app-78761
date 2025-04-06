@@ -96,13 +96,25 @@
                                 </form>
                             }
 
-                            @if (User.IsInRole("Patient") && appointment.Status == "Completed" && !appointment.HasFeedback)
+                            @if (User.IsInRole("Patient") && 
+                                (appointment.Status == "Approved" || appointment.Status == "Completed"))
                             {
-                                <a class="btn btn-outline-success btn-sm"
-                                   asp-page="/Feedback/AddFeedback"
-                                   asp-route-appointmentId="@appointment.Id">
-                                    Leave Feedback
-                                </a>
+                                @if (!appointment.HasFeedback)
+                                {
+                                    <a class="btn btn-outline-success btn-sm"
+                                       asp-page="/Feedback/AddFeedback"
+                                       asp-route-appointmentId="@appointment.Id">
+                                        Leave Feedback
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-danger btn-sm"
+                                       asp-page="/Feedback/DeleteFeedback"
+                                       asp-route-appointmentId="@appointment.Id">
+                                        Delete Feedback
+                                    </a>
+                                }
                             }
                         </td>
                     }

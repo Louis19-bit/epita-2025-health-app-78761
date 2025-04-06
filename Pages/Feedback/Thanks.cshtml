@@ -1,0 +1,16 @@
+@page
+@{
+    ViewData["Title"] = "Thank You";
+    Layout = "_Layout";
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60vh;">
+    <div class="text-center">
+        <h1 class="display-4 text-success mb-4">🎉 Thank You!</h1>
+        <p class="lead">Your feedback has been submitted successfully.</p>
+
+        <a asp-page="/Appointments/ManageAppointments" class="btn btn-primary mt-4 px-4 py-2">
+            Back to Appointments
+        </a>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JqIHn2ST0zIskeIgYYkkWwLvfjK0tZRS9jd1bpyaZhw=",
+  "Hash": "K+DUdHtNhkZynI8Iz7mkiQEVgtkEXR1rdDtYQ7U1cSo=",
   "Source": "HospitalAppointmentSystem",
   "BasePath": "_content/HospitalAppointmentSystem",
   "Mode": "Default",
@@ -4154,6 +4154,27 @@
       "OriginalItemSpec": "wwwroot/css/site.css"
     },
     {
+      "Identity": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/docs/MedLife_Development_Report.pdf",
+      "SourceId": "HospitalAppointmentSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/",
+      "BasePath": "_content/HospitalAppointmentSystem",
+      "RelativePath": "docs/MedLife_Development_Report#[.{fingerprint}]?.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "gg1tsi2pdk",
+      "Integrity": "YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/docs/MedLife_Development_Report.pdf"
+    },
+    {
       "Identity": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/favicon.ico",
       "SourceId": "HospitalAppointmentSystem",
       "SourceType": "Discovered",
@@ -6276,6 +6297,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-KbRAtTdCZlkPQMEP8615MCQRMWQsaAwQYpxvPAoetmA="
+        }
+      ]
+    },
+    {
+      "Route": "docs/MedLife_Development_Report.gg1tsi2pdk.pdf",
+      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/docs/MedLife_Development_Report.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "66817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 05 Apr 2025 23:37:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gg1tsi2pdk"
+        },
+        {
+          "Name": "label",
+          "Value": "docs/MedLife_Development_Report.pdf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08="
+        }
+      ]
+    },
+    {
+      "Route": "docs/MedLife_Development_Report.pdf",
+      "AssetFile": "/Users/louis-alexandre/Desktop/WebApp/HospitalAppointmentSystem/wwwroot/docs/MedLife_Development_Report.pdf",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "66817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/pdf"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 05 Apr 2025 23:37:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-YM+O3eE/tlrWEFFnfiXgswm935AMwlk1WqvlgYw1U08="
         }
       ]
     },

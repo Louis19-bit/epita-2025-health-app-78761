@@ -1,0 +1,16 @@
+@page
+@model DeleteFeedbackModel
+@{
+    ViewData["Title"] = "Delete Feedback";
+}
+
+<div class="container mt-5 text-center">
+    <h2>Delete Feedback</h2>
+    <p class="text-danger">Are you sure you want to delete your feedback for <strong>@Model.DoctorName</strong>?</p>
+
+    <form method="post">
+        <input type="hidden" asp-for="AppointmentId" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a asp-page="/Appointments/ManageAppointments" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
