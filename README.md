@@ -91,3 +91,45 @@ Critical project challenges effectively resolved include appointment scheduling 
 ## 12. Conclusion
 
 The MedLife Hospital Appointment System uses innovative practical technology to improve operational efficiency while enhancing patient care quality alongside data security protection which establishes itself as an essential management tool in modern hospitals.
+
+## 13. Screenshots
+### 13.1 Home Page
+![Home Page Screenshot](</Pictures/WhatsApp Image 2025-04-05 at 23.30.25.jpeg>)
+
+### 13.2 Appointment Booking
+![Appointment Booking Screenshot](</Pictures/WhatsApp Image 2025-04-05 at 23.32.18.jpeg>)
+### 13.2 Appointment Calendar
+![Appointment Calendar Screenshot](</Pictures/WhatsApp Image 2025-04-05 at 23.31.42.jpeg>)
+### 13.3 Appointment Management
+![Appointment Management Screenshot](<Pictures/Capture d’écran 2025-04-06 à 10.10.57.png>)
+### 13.3 Appointment Confirmation Doctor Accepted
+![Appointment Confirmation Screenshot](<Pictures/WhatsApp Image 2025-04-05 at 23.34.18.jpeg>)
+### 13.4 Appointment Confirmation Patient Email .ics
+![Appointment Confirmation Patient Email .ics](<Pictures/Capture d’écran 2025-04-05 à 22.44.32.png>)
+### 13.5 Feedback Submission After Appointment
+![Feedback Submission After Appointment](<Pictures/Capture d’écran 2025-04-06 à 10.11.50.png>)
+### 13.6 Different Status of Appointments
+![Different Status of Appointments](<Pictures/WhatsApp Image 2025-04-05 at 23.32.18.jpeg>)
+### 13.7 Doctor Profile > Feedback
+![Doctor Profile > Feedback](<Pictures/Capture d’écran 2025-04-06 à 10.14.11.png>)
+### 13.8 Doctor Profile > Medical Records with AI chat
+![Doctor Profile > Medical Records with AI chat](<Pictures/WhatsApp Image 2025-04-05 at 23.33.39.jpeg>)
+### 13.9 Prescriptions
+![Prescriptions](<Pictures/WhatsApp Image 2025-04-05 at 23.33.59.jpeg>)
+### 13.10 Doctor Days Off
+![Doctor Days Off](<Pictures/WhatsApp Image 2025-04-05 at 23.33.11.jpeg>)
+### 13.11 Administrator > Roles Management
+![Administrator > Roles Management](<Pictures/Capture d’écran 2025-04-06 à 16.02.29.png>)
+### 13.12 Privacy Policy
+![Privacy Policy](<Pictures/WhatsApp Image 2025-04-05 at 23.32.30.jpeg>)
+### 13.13 Login Page
+![Login Page](<Pictures/WhatsApp Image 2025-04-05 at 23.30.43.jpeg>)
+### 13.14 Registration Page
+![Registration Page](<Pictures/WhatsApp Image 2025-04-05 at 23.30.59.jpeg>)
+### 13.15 Documentation Page
+![Documentation Page](<Pictures/WhatsApp Image 2025-04-05 at 23.31.12.jpeg>)
+
+And more to discover in the project! Feel free to explore the code and the features implemented in the project or simply run the application to see it in action ;)
+
+## 14. Contact Information
+For any questions or inquiries, please feel free to contact me at: louis.alex.esnault@gmail.com
